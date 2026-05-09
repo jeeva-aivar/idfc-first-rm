@@ -1,5 +1,5 @@
 'use client'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@/components/ui/Icon'
@@ -27,8 +27,9 @@ export default function LoginPage() {
   const otpRefs = useRef<(HTMLInputElement | null)[]>([])
 
   useEffect(() => {
-    if (status === 'authenticated') router.replace('/morning-briefing')
-  }, [status, router])
+    // Always sign out on login page load so the demo always starts fresh
+    if (status === 'authenticated') signOut({ redirect: false })
+  }, [status])
 
   const submitCreds = (e?: React.FormEvent) => {
     e?.preventDefault()
