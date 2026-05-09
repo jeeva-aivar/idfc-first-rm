@@ -33,6 +33,8 @@ model RM {
   emailThreads      EmailThread[]
   overnightStats    OvernightStats[]
   managerAlignments ManagerAlignment[]
+  calendarEvents    CalendarEvent[]
+  meetingInvites    MeetingInvite[]
 }
 
 // ─── CUSTOMERS ──────────────────────────────────────────────────────────────
@@ -68,6 +70,8 @@ model Customer {
   cbsAlerts       CBSAlert[]
   emailThreads    EmailThread[]
   milestones      CustomerMilestone[]
+  calendarEvents  CalendarEvent[]
+  meetingInvites  MeetingInvite[]
 }
 
 // ─── PRIORITY STACK ─────────────────────────────────────────────────────────
@@ -351,4 +355,43 @@ model CustomerMilestone {
   value         Decimal?
   description   String
   flaggedForRM  Boolean  @default(false)
+}
+
+// ─── CALENDAR EVENTS ──────────────────────────────────────────────────────────
+model CalendarEvent {
+  id           String    @id @default(uuid())
+  rmId         String
+  rm           RM        @relation(fields: [rmId], references: [id])
+  title        String
+  eventType    String    // CUSTOMER_CALL | INTERNAL_MEETING | STANDUP | SITE_VISIT | REVIEW | PERSONAL | OOO
+  startAt      DateTime
+  endAt        DateTime
+  location     String?
+  description  String?
+  customerId   String?
+  customer     Customer? @relation(fields: [customerId], references: [id])
+  attendees    Json?     // [{name, email, role}]
+  status       String    @default("CONFIRMED") // CONFIRMED | TENTATIVE | CANCELLED | DECLINED
+  aiGenerated  Boolean   @default(false)
+  linkedEmailId String?
+}
+
+// ─── MEETING INVITES ──────────────────────────────────────────────────────────
+model MeetingInvite {
+  id           String    @id @default(uuid())
+  rmId         String
+  rm           RM        @relation(fields: [rmId], references: [id])
+  subject      String
+  fromName     String
+  fromEmail    String
+  proposedAt   DateTime
+  durationMin  Int
+  location     String?
+  body         String
+  receivedAt   DateTime
+  response     String?   // ACCEPTED | DECLINED | TENTATIVE | PENDING
+  respondedAt  DateTime?
+  priority     String    @default("NORMAL") // HIGH | NORMAL | LOW
+  customerId   String?
+  customer     Customer? @relation(fields: [customerId], references: [id])
 }
