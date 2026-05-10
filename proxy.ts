@@ -1,15 +1,18 @@
-import { withAuth } from 'next-auth/middleware'
+import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const SECRET = process.env.NEXTAUTH_SECRET ?? 'idfc-rm-workspace-demo-secret-2026'
+export function proxy(request: NextRequest) {
+  // NextAuth uses __Secure- prefix on HTTPS (production), plain name on HTTP (local)
+  const token =
+    request.cookies.get('__Secure-next-auth.session-token') ??
+    request.cookies.get('next-auth.session-token')
 
-const authMiddleware = withAuth({
-  secret: SECRET,
-  pages: { signIn: '/login' },
-})
+  if (!token) {
+    const loginUrl = new URL('/login', request.url)
+    return NextResponse.redirect(loginUrl)
+  }
 
-export function proxy(request: NextRequest, ...args: any[]) {
-  return (authMiddleware as any)(request, ...args)
+  return NextResponse.next()
 }
 
 export const config = {
