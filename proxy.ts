@@ -1,17 +1,9 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+// Auth is handled client-side via useSession in AppShell.
+// Proxy is a pass-through — CloudFront strips cookies before they reach here.
 export function proxy(request: NextRequest) {
-  // NextAuth uses __Secure- prefix on HTTPS (production), plain name on HTTP (local)
-  const token =
-    request.cookies.get('__Secure-next-auth.session-token') ??
-    request.cookies.get('next-auth.session-token')
-
-  if (!token) {
-    const loginUrl = new URL('/login', request.url)
-    return NextResponse.redirect(loginUrl)
-  }
-
   return NextResponse.next()
 }
 
