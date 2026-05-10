@@ -14,9 +14,8 @@ const handler = NextAuth({
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null
         if (credentials.email === 'demo@idfcfirst.com' && credentials.password === 'demo') {
-          const rm = await prisma.rM.findUnique({ where: { id: 'rm-priya-sharma-001' } })
-          if (!rm) return null
-          return { id: rm.id, name: rm.name, email: rm.email }
+          // Demo auth — no DB lookup needed, credentials are fixed for this demo
+          return { id: 'rm-priya-sharma-001', name: 'Priya Sharma', email: 'priya.sharma@idfcfirst.com' }
         }
         return null
       },
