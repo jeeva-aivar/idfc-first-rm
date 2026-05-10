@@ -3,25 +3,29 @@ const prisma = new PrismaClient()
 
 const RM_ID = 'rm-priya-sharma-001'
 
-// Real customer IDs from DB
-const C = {
-  mehta:   '8b3ea74e-9e28-474e-ae05-8515b46963ac',
-  iyer:    'cca91ff2-20c5-44dd-81ed-fa8d8960aead',
-  kapoor:  '7d117b36-2646-46c8-8ebc-8ef3934ebf17',
-  sharma:  'c7e315c4-4d90-4681-a96c-5398a2d7a935',
-  patel:   'd90f34c9-2083-4651-90dc-3a9c196b38f1',
-  joshi:   '05d19e25-f760-4e3a-bebd-fcb54cde2fe5',
-  singh:   '0ad98e6a-708b-49ab-94ee-4ca65be03b20',
-  mehra:   '3def212a-2537-455b-b3b1-158f5699e362',
-  verma:   '218171b4-12aa-4164-8a4f-0095ae68db97',
-  desai:   'e88dbdd6-4748-4d88-892e-72ae6b06a873',
-}
-
 // IST offset helper — IST = UTC+5:30
 const ist = (dateStr: string) => new Date(dateStr)
 
 async function main() {
   console.log('🌍 Starting world expansion seed…')
+
+  // Look up customer IDs dynamically by cifId so re-seeds always work
+  const customers = await prisma.customer.findMany({ select: { id: true, cifId: true } })
+  const byCif = Object.fromEntries(customers.map(c => [c.cifId, c.id]))
+  const C = {
+    mehta:  byCif['CIF-MH-004412'],
+    iyer:   byCif['CIF-WM-007731'],
+    kapoor: byCif['CIF-PR-002218'],
+    sharma: byCif['CIF-BK-009901'],
+    patel:  byCif['CIF-BK-006634'],
+    joshi:  byCif['CIF-PR-003345'],
+    singh:  byCif['CIF-BK-008821'],
+    mehra:  byCif['CIF-BK-011203'],
+    verma:  byCif['CIF-WM-001102'],
+    desai:  byCif['CIF-RT-015567'],
+  }
+  const missing = Object.entries(C).filter(([, v]) => !v).map(([k]) => k)
+  if (missing.length) throw new Error(`Customers not found — run seed.ts first: ${missing.join(', ')}`)
 
   // ─── EMAIL THREADS + EMAILS ─────────────────────────────────────────────────
 
