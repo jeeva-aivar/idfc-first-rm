@@ -1,7 +1,10 @@
 import { withAuth } from 'next-auth/middleware'
 import type { NextRequest } from 'next/server'
 
+const SECRET = process.env.NEXTAUTH_SECRET ?? 'idfc-rm-workspace-demo-secret-2026'
+
 const authMiddleware = withAuth({
+  secret: SECRET,
   pages: { signIn: '/login' },
 })
 
