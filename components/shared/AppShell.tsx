@@ -22,6 +22,13 @@ const NAV_SECTIONS = [
     ],
   },
   {
+    section: 'CUSTOMERS',
+    items: [
+      { id: 'portfolio',   label: 'Portfolio',        icon: 'Users',      path: '/portfolio' },
+      { id: 'book',        label: 'Consolidated Book', icon: 'Wallet',    path: '/consolidated-book' },
+    ],
+  },
+  {
     section: 'PERFORMANCE',
     items: [
       { id: 'leaderboard', label: 'Leaderboard',      icon: 'Trophy',     path: '/leaderboard' },
@@ -372,43 +379,65 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         style={{
           position: 'fixed', top: 0, left: 0, height: '100vh',
           width: sidebarW, flexShrink: 0,
-          background: 'var(--bg-subtle)', borderRight: '1px solid var(--border-subtle)',
+          background: 'var(--sb-bg)', borderRight: '1px solid var(--sb-border)',
           display: 'flex', flexDirection: 'column',
           transition: 'width 200ms ease', zIndex: 30,
         }}
       >
         {/* Logo */}
-        <div style={{ height: 'var(--topbar-h)', padding: collapsed ? 0 : '0 18px', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', borderBottom: '1px solid var(--border-subtle)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <LogoMark size={28} />
-            {!collapsed && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 2, lineHeight: 1 }}>
-                <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', color: 'var(--text-primary)' }}>IDFC FIRST</span>
-                <span style={{ color: 'var(--text-tertiary)', fontSize: 9.5, fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>AI WORKSPACE</span>
-              </div>
-            )}
-          </div>
+        <div style={{ height: 'var(--topbar-h)', padding: collapsed ? 0 : '0 16px', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', borderBottom: '1px solid var(--sb-border)', gap: 10 }}>
+          {/* Document icon mark */}
+          <span style={{ width: 32, height: 32, borderRadius: 8, background: '#7B1F1F', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
+              <path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" strokeWidth="1.7" strokeLinejoin="round" />
+              <path d="M8 11h8M8 14.5h8M8 18h5" stroke="white" strokeWidth="1.7" strokeLinecap="round" />
+            </svg>
+          </span>
+          {!collapsed && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 1, lineHeight: 1 }}>
+              <span>
+                <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--sb-text-strong)' }}>IDFC</span>
+                <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--idfc-red-bright)', marginLeft: 4 }}>FIRST</span>
+              </span>
+              <span style={{ color: 'var(--sb-text-muted)', fontSize: 9.5, fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>AI Workspace</span>
+            </div>
+          )}
         </div>
 
         {/* Nav */}
         <nav style={{ flex: 1, overflowY: 'auto', padding: '16px 12px 24px' }}>
           {NAV_SECTIONS.map((sec) => (
             <div key={sec.section} style={{ marginBottom: 20 }}>
-              {!collapsed && <div className="caption" style={{ padding: '0 12px', marginBottom: 8, color: 'var(--text-tertiary)', fontSize: 10.5 }}>{sec.section}</div>}
-              {collapsed && <div style={{ height: 1, background: 'var(--border-subtle)', margin: '0 8px 10px' }} />}
+              {!collapsed && <div style={{ padding: '0 12px', marginBottom: 8, fontFamily: "'JetBrains Mono','SF Mono',ui-monospace,monospace", fontSize: 10, fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--sb-text-muted)' }}>{sec.section}</div>}
+              {collapsed && <div style={{ height: 1, background: 'var(--sb-border)', margin: '0 8px 10px' }} />}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {sec.items.map((it) => (
-                  <div
-                    key={it.id}
-                    className={'nav-item ' + (activeId === it.id ? 'active' : '')}
-                    style={{ justifyContent: collapsed ? 'center' : 'flex-start', padding: collapsed ? 0 : '0 12px', height: collapsed ? 36 : 32 }}
-                    onClick={() => navigate(it.path)}
-                    title={collapsed ? it.label : undefined}
-                  >
-                    <Icon name={it.icon} size={collapsed ? 17 : 15} />
-                    {!collapsed && <span style={{ flex: 1 }}>{it.label}</span>}
-                  </div>
-                ))}
+                {sec.items.map((it) => {
+                  const isActive = activeId === it.id
+                  return (
+                    <div
+                      key={it.id}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 10,
+                        height: collapsed ? 36 : 32,
+                        padding: collapsed ? 0 : '0 12px',
+                        justifyContent: collapsed ? 'center' : 'flex-start',
+                        borderRadius: 8,
+                        cursor: 'pointer',
+                        fontSize: 13.5,
+                        color: isActive ? 'var(--sb-text-strong)' : 'var(--sb-text)',
+                        background: isActive ? 'var(--sb-active-bg)' : 'transparent',
+                        borderLeft: isActive ? '2px solid var(--sb-active-border)' : '2px solid transparent',
+                        fontWeight: isActive ? 500 : 400,
+                        transition: 'background 100ms ease',
+                      }}
+                      onClick={() => navigate(it.path)}
+                      title={collapsed ? it.label : undefined}
+                    >
+                      <Icon name={it.icon} size={collapsed ? 17 : 15} style={{ color: isActive ? 'var(--idfc-red-bright)' : '#E8E4DF' }} />
+                      {!collapsed && <span style={{ flex: 1 }}>{it.label}</span>}
+                    </div>
+                  )
+                })}
               </div>
             </div>
           ))}
@@ -423,8 +452,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             height: 32, width: collapsed ? 32 : 'auto',
             padding: collapsed ? 0 : '0 10px',
             display: 'inline-flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start',
-            gap: 8, borderRadius: 8, border: '1px solid var(--border-subtle)', background: 'var(--bg-card)',
-            fontSize: 12, color: 'var(--text-secondary)', cursor: 'pointer',
+            gap: 8, borderRadius: 8, border: '1px solid var(--sb-border)', background: 'rgba(255,255,255,0.04)',
+            fontSize: 12, color: 'var(--sb-text)', cursor: 'pointer',
           }}
         >
           <Icon name={collapsed ? 'ChevronsRight' : 'ChevronsLeft'} size={14} />
@@ -432,12 +461,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </button>
 
         {/* User */}
-        <div style={{ padding: collapsed ? '12px 0' : '12px 16px', borderTop: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 10 }}>
+        <div style={{ padding: collapsed ? '12px 0' : '12px 16px', borderTop: '1px solid var(--sb-border)', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 10 }}>
           <div className="avatar" style={{ width: 30, height: 30, fontSize: 11 }}>{MOCK.rm.initials}</div>
           {!collapsed && (
             <div style={{ lineHeight: 1.4 }}>
-              <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)' }}>{MOCK.rm.name}</div>
-              <div style={{ fontSize: 11, color: 'var(--text-tertiary)' }}>{MOCK.rm.role}</div>
+              <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--sb-text-strong)' }}>{MOCK.rm.name}</div>
+              <div style={{ fontSize: 11, color: 'var(--sb-text-muted)' }}>{MOCK.rm.role}</div>
             </div>
           )}
         </div>
