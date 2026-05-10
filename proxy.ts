@@ -12,7 +12,11 @@ export const config = {
     '/morning-briefing',
     '/priority-stack',
     '/auto-actions',
+    '/auto-actions/:id',
     '/daily-debrief',
     '/leaderboard',
+    '/portfolio',
+    '/portfolio/:id',
+    '/consolidated-book',
   ],
 }
