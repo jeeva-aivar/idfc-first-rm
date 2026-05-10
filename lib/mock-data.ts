@@ -263,13 +263,17 @@ export const MOCK = {
 
   navItems: [
     { section: "TODAY", items: [
-      { id: "briefing",    label: "Morning Briefing", icon: "Sun" },
-      { id: "priority",    label: "Priority Stack",   icon: "ListChecks" },
-      { id: "actions",     label: "Auto-actions",     icon: "Sparkles" },
-      { id: "debrief",     label: "Daily Debrief",    icon: "Moon" },
+      { id: "briefing",    label: "Morning Briefing", icon: "Sun",        path: "/morning-briefing" },
+      { id: "priority",    label: "Priority Stack",   icon: "ListChecks", path: "/priority-stack" },
+      { id: "actions",     label: "Auto-actions",     icon: "Sparkles",   path: "/auto-actions" },
+      { id: "debrief",     label: "Daily Debrief",    icon: "Moon",       path: "/daily-debrief" },
+    ]},
+    { section: "CUSTOMERS", items: [
+      { id: "portfolio",   label: "Portfolio",        icon: "Users",      path: "/portfolio" },
+      { id: "book",        label: "Consolidated Book", icon: "Wallet",   path: "/consolidated-book" },
     ]},
     { section: "PERFORMANCE", items: [
-      { id: "leaderboard", label: "Leaderboard",      icon: "Trophy" },
+      { id: "leaderboard", label: "Leaderboard",      icon: "Trophy",     path: "/leaderboard" },
     ]},
   ],
 }
