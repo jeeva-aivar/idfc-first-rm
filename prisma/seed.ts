@@ -18,6 +18,8 @@ async function main() {
     prisma.nBASignalEvent.deleteMany(),
     prisma.customerNote.deleteMany(),
     prisma.callLog.deleteMany(),
+    prisma.meetingInvite.deleteMany(),
+    prisma.calendarEvent.deleteMany(),
     prisma.email.deleteMany(),
     prisma.emailThread.deleteMany(),
     prisma.customerMilestone.deleteMany(),
