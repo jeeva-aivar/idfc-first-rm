@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { signOut } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import { Icon } from '@/components/ui/Icon'
 import { StatusDot } from '@/components/ui/StatusDot'
 import { Blade } from '@/components/ui/Blade'
@@ -346,9 +346,14 @@ function Topbar({ title, sidebarW }: { title: string; sidebarW: number }) {
 // ─── Main shell ──────────────────────────────────────────────────────────────
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  const { status } = useSession()
   const [collapsed, setCollapsed] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
+
+  useEffect(() => {
+    if (status === 'unauthenticated') router.replace('/login')
+  }, [status, router])
 
   const sidebarW = collapsed ? 72 : 240
 
