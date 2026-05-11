@@ -113,7 +113,7 @@ export default function MeetingAvatarPage() {
     if (!link.trim()) return;
     setStatus('loading');
     try {
-      const res = await fetch('https://avatar.aivar.app/meeting', {
+      const res = await fetch('/api/avatar/meeting', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ meeting_link: link, title }),
