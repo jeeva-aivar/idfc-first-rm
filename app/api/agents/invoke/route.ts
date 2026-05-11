@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { BedrockAgentCoreClient, InvokeAgentRuntimeCommand } from '@aws-sdk/client-bedrock-agentcore'
+import { Readable } from 'stream'
 
 const AGENT_ARNS: Record<string, string> = {
   pitch_builder:     'arn:aws:bedrock-agentcore:us-east-1:646731024209:runtime/pitch_builder-5izhaw4oB7',
@@ -10,6 +11,14 @@ const AGENT_ARNS: Record<string, string> = {
 }
 
 const client = new BedrockAgentCoreClient({ region: 'us-east-1' })
+
+async function readStream(stream: Readable): Promise<string> {
+  const chunks: Buffer[] = []
+  for await (const chunk of stream) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk))
+  }
+  return Buffer.concat(chunks).toString('utf-8')
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,10 +38,9 @@ export async function POST(req: NextRequest) {
       accept: 'application/json',
     })
 
-    const response = await client.send(command)
+    const result = await client.send(command)
 
-    const bodyBytes = await response.response?.transformToByteArray()
-    const text = bodyBytes ? new TextDecoder().decode(bodyBytes) : ''
+    const text = result.response ? await readStream(result.response as Readable) : ''
     let data: unknown
     try { data = JSON.parse(text) } catch { data = { raw: text } }
 
