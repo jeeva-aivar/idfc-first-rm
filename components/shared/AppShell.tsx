@@ -56,12 +56,14 @@ const SEARCH_RESULTS = [
 
 function LogoMark({ size = 28 }: { size?: number }) {
   return (
-    <span style={{ width: size, height: size, borderRadius: 6, background: 'var(--idfc-red)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-      <svg width={Math.round(size * 0.62)} height={Math.round(size * 0.62)} viewBox="0 0 24 24" fill="none">
-        <path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M8 11h8M8 14.5h8M8 18h5" stroke="white" strokeWidth="1.6" strokeLinecap="round" />
-      </svg>
-    </span>
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" style={{ flexShrink: 0 }}>
+      <rect width="100" height="100" fill="#8B1A1A"/>
+      <rect x="6" y="6" width="88" height="88" fill="white"/>
+      <rect x="14" y="14" width="72" height="72" fill="#8B1A1A"/>
+      <rect x="22" y="22" width="56" height="16" fill="white"/>
+      <rect x="22" y="44" width="38" height="14" fill="white"/>
+      <rect x="22" y="64" width="18" height="14" fill="white"/>
+    </svg>
   )
 }
 
@@ -386,13 +388,21 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       >
         {/* Logo */}
         <div style={{ height: 'var(--topbar-h)', padding: collapsed ? 0 : '0 16px', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', borderBottom: '1px solid var(--sb-border)', gap: 10 }}>
-          {/* Document icon mark */}
-          <span style={{ width: 32, height: 32, borderRadius: 8, background: '#7B1F1F', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
-              <path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" strokeWidth="1.7" strokeLinejoin="round" />
-              <path d="M8 11h8M8 14.5h8M8 18h5" stroke="white" strokeWidth="1.7" strokeLinecap="round" />
-            </svg>
-          </span>
+          {/* IDFC FIRST logo mark */}
+          <svg width={34} height={34} viewBox="0 0 100 100" fill="none" style={{ flexShrink: 0 }}>
+            {/* Outer square background */}
+            <rect width="100" height="100" fill="#8B1A1A"/>
+            {/* White border frame */}
+            <rect x="6" y="6" width="88" height="88" fill="white"/>
+            {/* Inner red background */}
+            <rect x="14" y="14" width="72" height="72" fill="#8B1A1A"/>
+            {/* Top bar — full width */}
+            <rect x="22" y="22" width="56" height="16" fill="white"/>
+            {/* Middle bar — 3/4 width */}
+            <rect x="22" y="44" width="38" height="14" fill="white"/>
+            {/* Bottom bar — small square */}
+            <rect x="22" y="64" width="18" height="14" fill="white"/>
+          </svg>
           {!collapsed && (
             <div style={{ lineHeight: 1 }}>
               <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--sb-text-strong)' }}>IDFC</span>
