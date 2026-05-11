@@ -4,14 +4,21 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@/components/ui/Icon'
 
-function LogoMark({ size = 32 }: { size?: number }) {
+function LogoMark({ size = 36 }: { size?: number }) {
+  // On dark-red login background: transparent areas let red show through, white = visible bars
   return (
-    <span style={{ width: size, height: size, borderRadius: 6, background: 'rgba(255,255,255,0.15)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-      <svg width={Math.round(size * 0.62)} height={Math.round(size * 0.62)} viewBox="0 0 24 24" fill="none">
-        <path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M8 11h8M8 14.5h8M8 18h5" stroke="white" strokeWidth="1.6" strokeLinecap="round" />
-      </svg>
-    </span>
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" style={{ flexShrink: 0 }}>
+      {/* Outer white border frame */}
+      <rect width="100" height="100" fill="white"/>
+      {/* Inner area — transparent so login background (dark red) shows through */}
+      <rect x="8" y="8" width="84" height="84" fill="transparent"/>
+      {/* Re-draw with correct layering: white frame, then cutout */}
+      <rect x="8" y="8" width="84" height="84" fill="rgba(180,30,30,0.85)"/>
+      {/* F-mark bars in white */}
+      <rect x="20" y="20" width="60" height="16" fill="white"/>
+      <rect x="20" y="44" width="40" height="14" fill="white"/>
+      <rect x="20" y="66" width="20" height="14" fill="white"/>
+    </svg>
   )
 }
 
@@ -112,14 +119,14 @@ export default function LoginPage() {
             <LogoMark size={32} />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2, lineHeight: 1 }}>
               <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.04em' }}>IDFC FIRST</span>
-              <span style={{ fontSize: 9.5, fontWeight: 500, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.7)' }}>AI WORKSPACE</span>
+              <span style={{ fontSize: 9.5, fontWeight: 500, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.7)' }}>EMPLOYEE AI WORKSPACE</span>
             </div>
           </div>
 
           {/* ── Step 1: Credentials ── */}
           {step === 'creds' && (
             <form onSubmit={submitCreds}>
-              <div className="caption" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 11 }}>RELATIONSHIP MANAGER PORTAL</div>
+              <div className="caption" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 11 }}>EMPLOYEE AI WORKSPACE</div>
               <h1 style={{ fontSize: 26, fontWeight: 600, letterSpacing: '-0.01em', marginTop: 8 }}>Welcome back, Priya</h1>
               <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', marginTop: 8 }}>Sign in to your AI workspace · Mumbai N cluster</p>
 
@@ -241,9 +248,9 @@ export default function LoginPage() {
         </div>
 
         <div className="anim-fade-up" style={{ animationDelay: '120ms', maxWidth: 540 }}>
-          <div className="caption" style={{ color: 'var(--idfc-red)', fontSize: 11 }}>AI WORKSPACE FOR RELATIONSHIP MANAGERS</div>
+          <div className="caption" style={{ color: 'var(--idfc-red)', fontSize: 11 }}>EMPLOYEE AI WORKSPACE</div>
           <h2 style={{ fontSize: 44, fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1.1, color: 'var(--text-primary)', marginTop: 12 }}>
-            Your day, <span style={{ fontWeight: 600, color: 'var(--idfc-red)' }}>orchestrated</span> overnight.
+            Your day, <span style={{ fontWeight: 600, color: 'var(--idfc-red)' }}>orchestrated</span> through IDFC First AI.
           </h2>
           <p className="body-lg" style={{ color: 'var(--text-secondary)', maxWidth: 480, marginTop: 16 }}>
             Routine work handled while you sleep. Priorities ranked and reasoned. Your judgement, where it matters most.
