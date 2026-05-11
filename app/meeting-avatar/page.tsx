@@ -30,11 +30,11 @@ function typeIcon(type: string) {
 
 export default function MeetingAvatarPage() {
   const [selected, setSelected] = useState<Set<number>>(new Set())
-  const [dispatching, setDispatching] = useState<Set<number>>(new Set())
-  const [dispatched, setDispatched] = useState<Set<number>>(new Set())
-  const [error, setError] = useState<number | null>(null)
+  const [avatarJoined, setAvatarJoined] = useState<Set<number>>(new Set())
 
-  const canSelect = (m: typeof TODAY_MEETINGS[0]) => !!m.link
+  // Adhoc dispatcher state
+  const [adhocLink, setAdhocLink] = useState('')
+  const [adhocStatus, setAdhocStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   function toggle(id: number) {
     setSelected(prev => {
@@ -44,33 +44,33 @@ export default function MeetingAvatarPage() {
     })
   }
 
-  async function dispatchSelected() {
-    const toDispatch = TODAY_MEETINGS.filter(m => selected.has(m.id) && m.link)
-    setDispatching(new Set(toDispatch.map(m => m.id)))
-    setError(null)
+  function dispatchSelected() {
+    // Mock — mark all selected as avatar joined
+    setAvatarJoined(prev => new Set([...prev, ...selected]))
+    setSelected(new Set())
+  }
 
-    await Promise.all(toDispatch.map(async m => {
-      try {
-        const res = await fetch('/api/avatar/join-meeting', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ meeting_url: m.link }),
-        })
-        if (res.ok) {
-          setDispatched(prev => new Set([...prev, m.id]))
-          setSelected(prev => { const n = new Set(prev); n.delete(m.id); return n })
-        } else {
-          setError(m.id)
-        }
-      } catch {
-        setError(m.id)
-      }
-    }))
-    setDispatching(new Set())
+  function removeAvatar(id: number) {
+    setAvatarJoined(prev => { const n = new Set(prev); n.delete(id); return n })
+  }
+
+  async function dispatchAdhoc() {
+    if (!adhocLink.trim()) return
+    setAdhocStatus('loading')
+    try {
+      const res = await fetch('/api/avatar/join-meeting', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ meeting_url: adhocLink }),
+      })
+      setAdhocStatus(res.ok ? 'success' : 'error')
+      if (res.ok) setAdhocLink('')
+    } catch {
+      setAdhocStatus('error')
+    }
   }
 
   const selectedCount = selected.size
-  const dispatchableSelected = TODAY_MEETINGS.filter(m => selected.has(m.id) && m.link).length
 
   return (
     <AppShell>
@@ -87,6 +87,31 @@ export default function MeetingAvatarPage() {
           </p>
         </div>
 
+        {/* Adhoc dispatcher */}
+        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: 12, padding: '20px 20px 16px', marginBottom: 32 }}>
+          <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: 'var(--text-tertiary)', marginBottom: 12 }}>DISPATCH AVATAR TO AN AD-HOC MEETING</div>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <input
+              value={adhocLink}
+              onChange={e => { setAdhocLink(e.target.value); setAdhocStatus('idle') }}
+              placeholder="Paste Teams or Google Meet link…"
+              style={{ flex: 1, height: 40, background: 'var(--bg-subtle)', border: '1px solid var(--border-subtle)', borderRadius: 8, padding: '0 14px', fontSize: 13, color: 'var(--text-primary)', outline: 'none', fontFamily: 'inherit' }}
+            />
+            <button
+              onClick={dispatchAdhoc}
+              disabled={!adhocLink.trim() || adhocStatus === 'loading'}
+              style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', height: 40, padding: '0 20px', borderRadius: 8, border: 'none', background: adhocLink.trim() ? 'var(--idfc-red)' : 'var(--bg-subtle)', color: adhocLink.trim() ? '#fff' : 'var(--text-tertiary)', cursor: adhocLink.trim() ? 'pointer' : 'not-allowed', whiteSpace: 'nowrap' }}
+            >
+              {adhocStatus === 'loading' ? 'DISPATCHING…' : 'DISPATCH AVATAR'}
+            </button>
+          </div>
+          <div style={{ marginTop: 8, fontSize: 12, fontFamily: "'Inter',sans-serif" }}>
+            {adhocStatus === 'success' && <span style={{ color: '#16a34a' }}>Avatar dispatched — debrief will arrive after the meeting.</span>}
+            {adhocStatus === 'error' && <span style={{ color: 'var(--idfc-red-bright)' }}>Dispatch failed. Check the link and try again.</span>}
+            {adhocStatus === 'idle' && <span style={{ color: 'var(--text-tertiary)' }}>Avatar will join, take notes, and send you a debrief.</span>}
+          </div>
+        </div>
+
         {/* Legend */}
         <div style={{ display: 'flex', gap: 20, marginBottom: 24, marginTop: 20 }}>
           {[{ color: '#16a34a', label: 'Score 80+ · attend yourself' }, { color: '#d97706', label: 'Score 60–79 · your call' }, { color: 'var(--text-tertiary)', label: 'Score <60 · good for avatar' }].map(l => (
@@ -101,24 +126,20 @@ export default function MeetingAvatarPage() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 32 }}>
           {TODAY_MEETINGS.map(m => {
             const isSelected = selected.has(m.id)
-            const isDispatched = dispatched.has(m.id)
-            const isDispatching = dispatching.has(m.id)
-            const hasLink = !!m.link
-            const hasError = error === m.id
+            const isJoined = avatarJoined.has(m.id)
 
             return (
               <div
                 key={m.id}
-                onClick={() => !isDispatched && hasLink && toggle(m.id)}
+                onClick={() => !isJoined && toggle(m.id)}
                 style={{
                   display: 'grid', gridTemplateColumns: '60px 1fr auto',
                   alignItems: 'center', gap: 16,
-                  background: isDispatched ? 'rgba(22,163,74,0.04)' : isSelected ? 'rgba(139,26,26,0.05)' : 'var(--bg-card)',
-                  border: isDispatched ? '1px solid rgba(22,163,74,0.25)' : isSelected ? '1px solid rgba(139,26,26,0.3)' : '1px solid var(--border-subtle)',
+                  background: isJoined ? 'rgba(22,163,74,0.04)' : isSelected ? 'rgba(139,26,26,0.05)' : 'var(--bg-card)',
+                  border: isJoined ? '1px solid rgba(22,163,74,0.25)' : isSelected ? '1px solid rgba(139,26,26,0.3)' : '1px solid var(--border-subtle)',
                   borderRadius: 10, padding: '14px 18px',
-                  cursor: hasLink && !isDispatched ? 'pointer' : 'default',
+                  cursor: isJoined ? 'default' : 'pointer',
                   transition: 'all 120ms ease',
-                  opacity: !hasLink ? 0.7 : 1,
                 }}
               >
                 {/* Time */}
@@ -132,23 +153,27 @@ export default function MeetingAvatarPage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <Icon name={typeIcon(m.type)} size={13} style={{ color: 'var(--text-tertiary)', flexShrink: 0 }} />
                     <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{m.title}</span>
-                    {isDispatched && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', background: 'rgba(22,163,74,0.1)', color: '#16a34a', border: '1px solid rgba(22,163,74,0.3)', borderRadius: 4, padding: '2px 6px' }}>AVATAR DISPATCHED</span>}
-                    {!hasLink && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, color: 'var(--text-tertiary)', border: '1px solid var(--border-subtle)', borderRadius: 4, padding: '2px 6px' }}>NO LINK</span>}
+                    {isJoined && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', background: 'rgba(22,163,74,0.1)', color: '#16a34a', border: '1px solid rgba(22,163,74,0.3)', borderRadius: 4, padding: '2px 6px' }}>AVATAR JOINING</span>}
                   </div>
-                  <div style={{ fontSize: 12.5, color: 'var(--text-tertiary)', marginTop: 3 }}>
-                    {m.with} · {m.type}
-                    {hasError && <span style={{ color: 'var(--idfc-red-bright)', marginLeft: 8 }}>Dispatch failed — try again</span>}
-                  </div>
+                  <div style={{ fontSize: 12.5, color: 'var(--text-tertiary)', marginTop: 3 }}>{m.with} · {m.type}</div>
                   <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 4, fontStyle: 'italic' }}>{m.reason}</div>
                 </div>
 
-                {/* Score + checkbox */}
+                {/* Score + checkbox/remove */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                   <div style={{ textAlign: 'right' }}>
                     <div style={{ fontFamily: "'Source Serif 4',Georgia,serif", fontSize: 28, fontWeight: 700, color: scoreColor(m.score), lineHeight: 1 }}>{m.score}</div>
                     <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9, color: 'var(--text-tertiary)', marginTop: 2 }}>SCORE</div>
                   </div>
-                  {hasLink && !isDispatched && (
+                  {isJoined ? (
+                    <button
+                      onClick={e => { e.stopPropagation(); removeAvatar(m.id) }}
+                      title="Remove avatar"
+                      style={{ width: 26, height: 26, borderRadius: 6, border: '1px solid var(--border-subtle)', background: 'var(--bg-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}
+                    >
+                      <Icon name="X" size={12} style={{ color: 'var(--text-tertiary)' }} />
+                    </button>
+                  ) : (
                     <div style={{
                       width: 22, height: 22, borderRadius: 6, flexShrink: 0,
                       border: isSelected ? '2px solid var(--idfc-red)' : '2px solid var(--border-subtle)',
@@ -159,8 +184,6 @@ export default function MeetingAvatarPage() {
                       {isSelected && <Icon name="Check" size={13} style={{ color: '#fff' }} />}
                     </div>
                   )}
-                  {isDispatching && <div style={{ width: 22, height: 22, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Icon name="Loader" size={14} style={{ color: 'var(--text-tertiary)' }} /></div>}
-                  {isDispatched && <Icon name="CheckCircle" size={20} style={{ color: '#16a34a' }} />}
                 </div>
               </div>
             )
@@ -172,23 +195,23 @@ export default function MeetingAvatarPage() {
           <Icon name="Bot" size={18} style={{ color: selectedCount > 0 ? 'var(--idfc-red)' : 'var(--text-tertiary)' }} />
           <div style={{ flex: 1 }}>
             {selectedCount === 0
-              ? <span style={{ fontSize: 13.5, color: 'var(--text-tertiary)' }}>Select meetings above to dispatch the avatar — only meetings with a link can be joined.</span>
-              : <span style={{ fontSize: 13.5, color: 'var(--text-primary)', fontWeight: 500 }}>{selectedCount} meeting{selectedCount > 1 ? 's' : ''} selected{dispatchableSelected < selectedCount ? ` · ${selectedCount - dispatchableSelected} missing link` : ''}</span>
+              ? <span style={{ fontSize: 13.5, color: 'var(--text-tertiary)' }}>Select meetings above to assign the avatar — click any row to select.</span>
+              : <span style={{ fontSize: 13.5, color: 'var(--text-primary)', fontWeight: 500 }}>{selectedCount} meeting{selectedCount > 1 ? 's' : ''} selected — avatar will join and debrief you after.</span>
             }
           </div>
           <button
             onClick={dispatchSelected}
-            disabled={dispatchableSelected === 0 || dispatching.size > 0}
+            disabled={selectedCount === 0}
             style={{
               fontFamily: "'JetBrains Mono',monospace", fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
               padding: '10px 24px', borderRadius: 8, border: 'none',
-              background: dispatchableSelected > 0 ? 'var(--idfc-red)' : 'var(--bg-subtle)',
-              color: dispatchableSelected > 0 ? '#fff' : 'var(--text-tertiary)',
-              cursor: dispatchableSelected > 0 ? 'pointer' : 'not-allowed',
+              background: selectedCount > 0 ? 'var(--idfc-red)' : 'var(--bg-subtle)',
+              color: selectedCount > 0 ? '#fff' : 'var(--text-tertiary)',
+              cursor: selectedCount > 0 ? 'pointer' : 'not-allowed',
               transition: 'all 120ms ease',
             }}
           >
-            {dispatching.size > 0 ? 'DISPATCHING…' : `DISPATCH AVATAR${dispatchableSelected > 1 ? 'S' : ''}`}
+            {`ASSIGN AVATAR${selectedCount > 1 ? 'S' : ''}`}
           </button>
         </div>
 
