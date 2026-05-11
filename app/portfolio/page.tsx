@@ -4,6 +4,15 @@ import { useRouter } from 'next/navigation'
 import { AppShell } from '@/components/shared/AppShell'
 import { Icon } from '@/components/ui/Icon'
 
+function agentForAction(nextAction: string): { label: string; path: string; icon: string } | null {
+  const a = nextAction.toLowerCase()
+  if (a.includes('pitch') || a.includes('cross-sell')) return { label: 'Pitch Builder', path: '/ai-agents/pitch-builder', icon: 'Presentation' }
+  if (a.includes('review') || a.includes('meeting') || a.includes('call') || a.includes('check-in')) return { label: 'Meeting Prep', path: '/ai-agents/meeting-preparer', icon: 'CalendarCheck' }
+  if (a.includes('memo') || a.includes('recap') || a.includes('debrief')) return { label: 'Memo Maker', path: '/ai-agents/memo-maker', icon: 'FileText' }
+  if (a.includes('portfolio') || a.includes('model') || a.includes('rebalanc')) return { label: 'Model Builder', path: '/ai-agents/model-builder', icon: 'BarChart3' }
+  return null
+}
+
 // ─── Mock data ───────────────────────────────────────────────────────────────
 const PORTFOLIO_CUSTOMERS = [
   { id: 1, name: 'Mehta Group',         segment: 'SME',    tier: 'Priority', revenue: 4.2,  aum: 8.4,  health: 62, nextAction: 'Sanction call · 09:30' },
@@ -141,7 +150,9 @@ function PortfolioContent() {
             <div key={h} style={{ fontFamily: "'JetBrains Mono','SF Mono',ui-monospace,monospace", fontSize: 10, fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>{h}</div>
           ))}
         </div>
-        {filtered.map((c, i) => (
+        {filtered.map((c, i) => {
+          const agent = agentForAction(c.nextAction)
+          return (
           <div
             key={c.id}
             className="row-hover"
@@ -158,9 +169,22 @@ function PortfolioContent() {
             <div className="num" style={{ fontSize: 13, color: 'var(--text-primary)' }}>₹{c.revenue} Cr</div>
             <div className="num" style={{ fontSize: 13, color: 'var(--text-primary)' }}>₹{c.aum} Cr</div>
             <HealthBar val={c.health} />
-            <div style={{ fontSize: 12.5, fontStyle: c.health < 60 ? 'italic' : 'normal', color: c.health < 60 ? 'var(--danger)' : 'var(--text-secondary)' }}>{c.nextAction}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 12.5, fontStyle: c.health < 60 ? 'italic' : 'normal', color: c.health < 60 ? 'var(--danger)' : 'var(--text-secondary)', flex: 1 }}>{c.nextAction}</span>
+              {agent && (
+                <button
+                  onClick={e => { e.stopPropagation(); router.push(`${agent.path}?clientId=CLI-${String(c.id).padStart(6, '0')}&clientName=${encodeURIComponent(c.name)}`) }}
+                  title={`Use ${agent.label}`}
+                  style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 4, height: 24, padding: '0 8px', borderRadius: 6, border: '1px solid rgba(139,26,26,0.25)', background: 'rgba(139,26,26,0.06)', color: 'var(--idfc-red)', fontSize: 11, fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                >
+                  <Icon name="Bot" size={11} />
+                  {agent.label}
+                </button>
+              )}
+            </div>
           </div>
-        ))}
+          )
+        })}
         {filtered.length === 0 && (
           <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-tertiary)', fontSize: 14 }}>No customers match the current filters.</div>
         )}
