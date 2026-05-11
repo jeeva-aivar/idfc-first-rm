@@ -15,12 +15,20 @@ const NAV_SECTIONS = [
   {
     section: 'TODAY',
     items: [
-      { id: 'briefing',    label: 'Morning Briefing',   icon: 'Sun',        path: '/morning-briefing' },
+      { id: 'briefing',    label: 'Brief Dashboard',    icon: 'Sun',        path: '/morning-briefing' },
       { id: 'priority',    label: 'Priority Stack',     icon: 'ListChecks', path: '/priority-stack' },
       { id: 'actions',     label: 'Auto-actions',       icon: 'Sparkles',   path: '/auto-actions' },
       { id: 'debrief',     label: 'Daily Debrief',      icon: 'Moon',       path: '/daily-debrief' },
-      { id: 'voice',       label: 'Voice Intelligence', icon: 'Mic',        path: '/voice-intelligence' },
-      { id: 'ai-agents',   label: 'AI Agents',          icon: 'Bot',        path: '/ai-agents' },
+      { id: 'voice',       label: 'Live Call Assist',   icon: 'Mic',        path: '/voice-intelligence' },
+      { id: 'ai-agents',   label: 'AI Agents',          icon: 'Bot',        path: '/ai-agents',
+        children: [
+          { id: 'pitch-builder',     label: 'Pitch Builder',     path: '/ai-agents/pitch-builder' },
+          { id: 'meeting-preparer',  label: 'Meeting Preparer',  path: '/ai-agents/meeting-preparer' },
+          { id: 'earnings-reviewer', label: 'Earnings Reviewer', path: '/ai-agents/earnings-reviewer' },
+          { id: 'model-builder',     label: 'Model Builder',     path: '/ai-agents/model-builder' },
+          { id: 'memo-maker',        label: 'Memo Maker',        path: '/ai-agents/memo-maker' },
+        ],
+      },
     ],
   },
   {
@@ -368,11 +376,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const sidebarW = collapsed ? 72 : 240
 
-  // Determine active nav item
-  const activeId = NAV_SECTIONS.flatMap(s => s.items).find(i => i.path === pathname)?.id ?? ''
+  // Determine active nav item (check children too)
+  const allItems = NAV_SECTIONS.flatMap(s => s.items.flatMap(i => [i, ...(('children' in i && i.children) ? i.children.map(c => ({ ...c, icon: '' })) : [])]))
+  const activeId = allItems.find(i => i.path === pathname)?.id ?? ''
+  const activeParentId = NAV_SECTIONS.flatMap(s => s.items).find(i => 'children' in i && i.children?.some(c => c.path === pathname))?.id ?? ''
 
   // Determine page title
-  const pageTitle = NAV_SECTIONS.flatMap(s => s.items).find(i => i.path === pathname)?.label ?? 'IDFC FIRST AI'
+  const pageTitle = allItems.find(i => i.path === pathname)?.label ?? 'IDFC FIRST AI'
+
+  const [expandedId, setExpandedId] = useState<string>(activeParentId || (pathname.startsWith('/ai-agents') ? 'ai-agents' : ''))
 
   const navigate = (path: string) => router.push(path)
 
@@ -421,29 +433,62 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               {collapsed && <div style={{ height: 1, background: 'rgba(255,255,255,0.07)', margin: '0 8px 10px' }} />}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {sec.items.map((it) => {
-                  const isActive = activeId === it.id
+                  const hasChildren = 'children' in it && it.children && it.children.length > 0
+                  const isActive = activeId === it.id || activeParentId === it.id
+                  const isExpanded = expandedId === it.id
                   return (
-                    <div
-                      key={it.id}
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: 10,
-                        height: collapsed ? 36 : 32,
-                        padding: collapsed ? 0 : '0 12px',
-                        justifyContent: collapsed ? 'center' : 'flex-start',
-                        borderRadius: 8,
-                        cursor: 'pointer',
-                        fontSize: 13.5,
-                        color: isActive ? '#EDE8E1' : '#C8C2BB',
-                        background: isActive ? 'rgba(220,38,38,0.12)' : 'transparent',
-                        borderLeft: isActive ? '2px solid #DC2626' : '2px solid transparent',
-                        fontWeight: isActive ? 500 : 400,
-                        transition: 'background 100ms ease',
-                      }}
-                      onClick={() => navigate(it.path)}
-                      title={collapsed ? it.label : undefined}
-                    >
-                      <Icon name={it.icon} size={collapsed ? 17 : 15} style={{ color: isActive ? 'var(--idfc-red-bright)' : '#E8E4DF' }} />
-                      {!collapsed && <span style={{ flex: 1 }}>{it.label}</span>}
+                    <div key={it.id}>
+                      <div
+                        style={{
+                          display: 'flex', alignItems: 'center', gap: 10,
+                          height: collapsed ? 36 : 32,
+                          padding: collapsed ? 0 : '0 12px',
+                          justifyContent: collapsed ? 'center' : 'flex-start',
+                          borderRadius: 8,
+                          cursor: 'pointer',
+                          fontSize: 13.5,
+                          color: isActive ? '#EDE8E1' : '#C8C2BB',
+                          background: isActive ? 'rgba(220,38,38,0.12)' : 'transparent',
+                          borderLeft: isActive ? '2px solid #DC2626' : '2px solid transparent',
+                          fontWeight: isActive ? 500 : 400,
+                          transition: 'background 100ms ease',
+                        }}
+                        onClick={() => {
+                          if (hasChildren) { setExpandedId(isExpanded ? '' : it.id) }
+                          else navigate(it.path)
+                        }}
+                        title={collapsed ? it.label : undefined}
+                      >
+                        <Icon name={it.icon} size={collapsed ? 17 : 15} style={{ color: isActive ? 'var(--idfc-red-bright)' : '#E8E4DF' }} />
+                        {!collapsed && <span style={{ flex: 1 }}>{it.label}</span>}
+                        {!collapsed && hasChildren && <Icon name={isExpanded ? 'ChevronDown' : 'ChevronRight'} size={12} style={{ color: '#C8C2BB' }} />}
+                      </div>
+                      {!collapsed && hasChildren && isExpanded && (
+                        <div style={{ marginLeft: 16, marginTop: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                          {it.children!.map(child => {
+                            const childActive = activeId === child.id
+                            return (
+                              <div
+                                key={child.id}
+                                onClick={() => navigate(child.path)}
+                                style={{
+                                  display: 'flex', alignItems: 'center', gap: 8,
+                                  height: 28, padding: '0 12px',
+                                  borderRadius: 6, cursor: 'pointer', fontSize: 12.5,
+                                  color: childActive ? '#EDE8E1' : 'rgba(200,194,187,0.7)',
+                                  background: childActive ? 'rgba(220,38,38,0.1)' : 'transparent',
+                                  borderLeft: childActive ? '2px solid #DC2626' : '2px solid transparent',
+                                  fontWeight: childActive ? 500 : 400,
+                                  transition: 'background 100ms ease',
+                                }}
+                              >
+                                <div style={{ width: 4, height: 4, borderRadius: '50%', background: childActive ? '#DC2626' : 'rgba(200,194,187,0.4)', flexShrink: 0 }} />
+                                {child.label}
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )}
                     </div>
                   )
                 })}

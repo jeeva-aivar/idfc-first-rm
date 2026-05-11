@@ -25,7 +25,7 @@ function MorningBriefingContent() {
       <div className="anim-fade-up" style={{ marginBottom: 32 }}>
         <div className="h2" style={{ color: 'var(--text-primary)' }}>Good morning, Priya.</div>
         <div className="body-lg" style={{ color: 'var(--text-secondary)', maxWidth: 720, marginTop: 8 }}>
-          While you slept, IDFC FIRST AI handled the routine. Here's what needs your judgement today.
+          Here's your brief for today — priorities, signals, and actions that need your attention.
         </div>
       </div>
 
