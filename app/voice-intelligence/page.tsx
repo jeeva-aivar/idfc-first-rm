@@ -363,7 +363,7 @@ function OverviewTab() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
         <MetricBox label="Total exposure" value="₹3.24" sub="Cr" />
         <MetricBox label="Avg balance · 90d" value="+18%" sub="vs Q2" positive />
-        <MetricBox label="CIBIL · Aug" value="786" />
+        <MetricBox label="CIBIL · May" value="786" />
         <MetricBox label="DPD 12mo" value="0" />
       </div>
       <SectionHead tag="Voice AI">Sentiment trend · this call</SectionHead>
@@ -376,16 +376,16 @@ function OverviewTab() {
       </div>
       <SectionHead tag="FIRST AI">Next-best-action</SectionHead>
       <div style={{ background: 'rgba(180,30,30,0.05)', border: '1px solid rgba(180,30,30,0.15)', borderRadius: 8, padding: '12px 14px', fontSize: 12.5, lineHeight: 1.55, color: 'var(--text-primary)' }}>
-        <span style={{ fontFamily: "'Source Serif 4',Georgia,serif", fontStyle: 'italic', fontSize: 15, color: 'var(--idfc-red-bright)', fontWeight: 500 }}>Reassure on locked terms</span>, then surface the <strong>prepayment waiver</strong> on WCDL. Mehta asked about it on <span style={{ background: 'rgba(217,119,6,0.1)', color: '#d97706', padding: '1px 5px', borderRadius: 3 }}>Aug 14</span> — still unresolved.
+        <span style={{ fontFamily: "'Source Serif 4',Georgia,serif", fontStyle: 'italic', fontSize: 15, color: 'var(--idfc-red-bright)', fontWeight: 500 }}>Reassure on locked terms</span>, then surface the <strong>prepayment waiver</strong> on WCDL. Mehta asked about it on <span style={{ background: 'rgba(217,119,6,0.1)', color: '#d97706', padding: '1px 5px', borderRadius: 3 }}>14 Apr</span> — still unresolved.
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8, fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>
-          <span>Sanction Lr · 06-Nov</span><span>·</span><span>CRM note · 14-Aug</span><span>·</span><span>SME pricing v3.1</span>
+          <span>Sanction Lr · 28-Feb</span><span>·</span><span>CRM note · 14-Apr</span><span>·</span><span>SME pricing v3.1</span>
         </div>
       </div>
       <SectionHead>Last 3 interactions</SectionHead>
       {[
-        { d: 'Oct 28', t: 'Email — Site visit confirmed for Nov 4 · BKC team' },
-        { d: 'Oct 14', t: 'Call · 18 min — Working-capital tranche · positive' },
-        { d: 'Aug 14', t: 'Branch visit — Asked about prepayment terms · open' },
+        { d: '8 May', t: 'Call · 22 min — Sanction call · sentiment warming' },
+        { d: '28 Apr', t: 'Call · 18 min — Working-capital tranche · positive' },
+        { d: '14 Apr', t: 'Branch visit — Asked about prepayment terms · open' },
       ].map(i => (
         <div key={i.d} style={{ display: 'flex', gap: 10, fontSize: 12, marginBottom: 6 }}>
           <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: 'var(--text-tertiary)', width: 44, flexShrink: 0, marginTop: 1 }}>{i.d}</span>
@@ -398,7 +398,7 @@ function OverviewTab() {
 
 function HoldingsTab() {
   const items = [
-    { ic: 'TL', name: 'Term loan · Plant & machinery', meta: 'A/c ••••4719 · Sanctioned 06-Nov-25', amt: '₹3.20', sub: 'Cr', tag: 'Outstanding', color: 'rgba(180,30,30,0.08)', textColor: 'var(--idfc-red-bright)' },
+    { ic: 'TL', name: 'Term loan · Plant & machinery', meta: 'A/c ••••4719 · Sanctioned 28-Feb-26', amt: '₹3.20', sub: 'Cr', tag: 'Outstanding', color: 'rgba(180,30,30,0.08)', textColor: 'var(--idfc-red-bright)' },
     { ic: 'CA', name: 'Current · Mehta Industries Pvt Ltd', meta: 'A/c ••••8821 · BKC branch', amt: '₹14.6', sub: 'L', tag: 'Bal · 90d avg', color: 'rgba(59,130,246,0.08)', textColor: '#3b82f6' },
     { ic: 'OD', name: 'Cash credit / OD', meta: 'A/c ••••1140 · Limit ₹50 L · Util 32%', amt: '₹16.0', sub: 'L', tag: 'Drawn', color: 'rgba(217,119,6,0.08)', textColor: '#d97706' },
     { ic: 'FD', name: 'Fixed deposit · Auto-renew', meta: "3 deposits · Matures Mar '27", amt: '₹42.0', sub: 'L', tag: 'Principal', color: 'rgba(22,163,74,0.08)', textColor: '#16a34a' },
@@ -430,14 +430,14 @@ function CreditTab() {
       <SectionHead>Term loan · ••••4719</SectionHead>
       <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border-subtle)', borderRadius: 8, padding: '4px 12px' }}>
         <RailRow k="Sanctioned" v="₹3.20 Cr" />
-        <RailRow k="Disbursed" v="₹1.20 Cr · 06-Nov-25" />
-        <RailRow k="Rate · locked" v="8.40% · MCLR + 1.10" vColor="#16a34a" />
+        <RailRow k="Disbursed" v="₹1.20 Cr · 28-Feb-26" />
+        <RailRow k="Rate · locked" v="10.25% · held until 11 May" vColor="#16a34a" />
         <RailRow k="Tenor" v="84 mo · 81 left" />
         <RailRow k="EMI" v="₹4,89,210 · 5th of mo" />
         <RailRow k="DPD · current" v="0 days" vColor="#16a34a" />
         <RailRow k="Prepayment" v="25%/yr waived" vColor="#d97706" />
       </div>
-      <SectionHead>Bureau · CIBIL Aug-25</SectionHead>
+      <SectionHead>Bureau · CIBIL Apr-26</SectionHead>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
         <MetricBox label="Score" value="786" sub="/ 900" />
         <MetricBox label="Δ 6mo" value="+12" positive />
@@ -453,12 +453,12 @@ function HistoryTab() {
     <>
       <SectionHead>12-month engagement</SectionHead>
       {[
-        { d: 'Oct 28', t: 'Email — Site visit confirmed for Nov 4' },
-        { d: 'Oct 14', t: 'Call · 18 min — Working capital tranche' },
-        { d: 'Aug 14', t: 'Branch visit — Asked about prepayment · open' },
-        { d: 'Jul 02', t: 'WhatsApp — FD renewal confirmation' },
-        { d: 'May 19', t: 'Service · resolved — Cheque book · 2-day TAT' },
-        { d: 'Apr 03', t: 'Product offer — Forex card · declined' },
+        { d: '8 May', t: 'Call · 22 min — Sanction call · sentiment warming' },
+        { d: '28 Apr', t: 'Call · 18 min — Working capital tranche · positive' },
+        { d: '14 Apr', t: 'Branch visit — Asked about prepayment · open' },
+        { d: '2 Apr', t: 'WhatsApp — FD renewal confirmation' },
+        { d: '18 Mar', t: 'Service · resolved — Cheque book · 2-day TAT' },
+        { d: '3 Mar', t: 'Product offer — Forex card · declined' },
       ].map(i => (
         <div key={i.d} style={{ display: 'flex', gap: 10, fontSize: 12, marginBottom: 8 }}>
           <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: 'var(--text-tertiary)', width: 44, flexShrink: 0, marginTop: 1 }}>{i.d}</span>
@@ -479,10 +479,10 @@ function HistoryTab() {
 function ComplianceTab() {
   const flags = [
     { ok: true, title: 'KYC · current', sub: "Aadhaar + PAN re-verified 14-Mar-23 · Re-KYC scheduled Mar '26" },
-    { ok: true, title: 'AML screening · clear', sub: 'Last screened 06-Nov-25 · No hits across UN, OFAC, RBI watchlists' },
-    { ok: false, title: 'Suitability review pending', sub: "Risk profile last refreshed Apr '24 · Refresh due before next product offer" },
+    { ok: true, title: 'AML screening · clear', sub: 'Last screened 06-May-26 · No hits across UN, OFAC, RBI watchlists' },
+    { ok: false, title: 'Suitability review pending', sub: "Risk profile last refreshed Apr '25 · Refresh due before next product offer" },
     { ok: true, title: 'Nominee on file', sub: 'Spouse · Mrs. Anjali Mehta · SA / FD / TL' },
-    { ok: false, title: 'Consent · Account Aggregator', sub: 'External cashflow consent expires 21-Dec-25 · Renew to retain DPD analytics' },
+    { ok: false, title: 'Consent · Account Aggregator', sub: 'External cashflow consent expires 21-Jun-26 · Renew to retain DPD analytics' },
   ]
   return (
     <>
