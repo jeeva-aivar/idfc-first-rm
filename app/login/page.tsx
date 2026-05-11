@@ -117,9 +117,9 @@ export default function LoginPage() {
           {/* Logo */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 32 }}>
             <LogoMark size={32} />
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 2, lineHeight: 1 }}>
-              <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.04em' }}>IDFC FIRST</span>
-              <span style={{ fontSize: 9.5, fontWeight: 500, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.7)' }}>EMPLOYEE AI WORKSPACE</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2, lineHeight: 1.15 }}>
+              <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.04em' }}>IDFC <span style={{ color: 'rgba(255,180,180,0.95)' }}>FIRST</span></span>
+              <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.04em', color: 'rgba(255,255,255,0.6)' }}>Bank</span>
             </div>
           </div>
 
