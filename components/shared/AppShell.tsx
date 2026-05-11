@@ -68,7 +68,7 @@ function LogoMark({ size = 28 }: { size?: number }) {
 function ProfileBlade({ open, onClose }: { open: boolean; onClose: () => void }) {
   const rm = MOCK.rm
   return (
-    <Blade open={open} onClose={onClose} eyebrow="RELATIONSHIP MANAGER" title={rm.name} width={520}
+    <Blade open={open} onClose={onClose} eyebrow="EMPLOYEE AI WORKSPACE" title={rm.name} width={520}
       footer={<div style={{ display: 'flex', gap: 8 }}><button className="btn-secondary" onClick={onClose}>Close</button></div>}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
         <div className="avatar" style={{ width: 56, height: 56, fontSize: 18 }}>{rm.initials}</div>
@@ -156,9 +156,9 @@ function NotificationSettingsModal({ open, onClose, onSave }: { open: boolean; o
 
 function HelpModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const items = [
-    { ico: 'BookOpen',      t: 'Read the RM playbook',          d: 'How AI Workspace fits your day · 12 min read' },
+    { ico: 'BookOpen',      t: 'Read the employee playbook',    d: 'How Employee AI Workspace fits your day · 12 min read' },
     { ico: 'PlayCircle',    t: 'Watch the 3-min walkthrough',   d: 'Morning briefing → debrief in one video' },
-    { ico: 'MessageCircle', t: 'Chat with the AI Workspace bot', d: 'Avg response 12 sec · 24×7' },
+    { ico: 'MessageCircle', t: 'Chat with the IDFC First AI bot', d: 'Avg response 12 sec · 24×7' },
     { ico: 'Phone',         t: 'Call IT helpdesk',              d: '1800-419-4332 · Mon–Sat 08:00–22:00' },
     { ico: 'Mail',          t: 'Email support',                 d: 'rm.workspace.support@idfcfirstbank.com' },
   ]
@@ -180,7 +180,7 @@ function HelpModal({ open, onClose }: { open: boolean; onClose: () => void }) {
         ))}
       </div>
       <div className="caption" style={{ marginTop: 16, textTransform: 'none', letterSpacing: 0, color: 'var(--text-tertiary)', fontSize: 12 }}>
-        AI Workspace v2.4 · Build 2026.05.08 · Patch notes →
+        Employee AI Workspace v2.4 · Build 2026.05.11 · Patch notes →
       </div>
     </Modal>
   )
@@ -394,12 +394,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </svg>
           </span>
           {!collapsed && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 1, lineHeight: 1 }}>
-              <span>
-                <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--sb-text-strong)' }}>IDFC</span>
-                <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--idfc-red-bright)', marginLeft: 4 }}>FIRST</span>
-              </span>
-              <span style={{ color: 'var(--sb-text-muted)', fontSize: 9.5, fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>AI Workspace</span>
+            <div style={{ lineHeight: 1 }}>
+              <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--sb-text-strong)' }}>IDFC</span>
+              <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--idfc-red-bright)', marginLeft: 4 }}>FIRST</span>
             </div>
           )}
         </div>

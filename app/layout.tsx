@@ -6,8 +6,8 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-  title: 'IDFC FIRST AI Workspace',
-  description: 'AI-augmented Relationship Manager workspace',
+  title: 'IDFC FIRST Employee AI Workspace',
+  description: 'Your day, orchestrated through IDFC First AI.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

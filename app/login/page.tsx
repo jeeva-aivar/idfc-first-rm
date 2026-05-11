@@ -119,7 +119,7 @@ export default function LoginPage() {
           {/* ── Step 1: Credentials ── */}
           {step === 'creds' && (
             <form onSubmit={submitCreds}>
-              <div className="caption" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 11 }}>RELATIONSHIP MANAGER PORTAL</div>
+              <div className="caption" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 11 }}>EMPLOYEE AI WORKSPACE</div>
               <h1 style={{ fontSize: 26, fontWeight: 600, letterSpacing: '-0.01em', marginTop: 8 }}>Welcome back, Priya</h1>
               <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', marginTop: 8 }}>Sign in to your AI workspace · Mumbai N cluster</p>
 
@@ -243,7 +243,7 @@ export default function LoginPage() {
         <div className="anim-fade-up" style={{ animationDelay: '120ms', maxWidth: 540 }}>
           <div className="caption" style={{ color: 'var(--idfc-red)', fontSize: 11 }}>AI WORKSPACE FOR RELATIONSHIP MANAGERS</div>
           <h2 style={{ fontSize: 44, fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1.1, color: 'var(--text-primary)', marginTop: 12 }}>
-            Your day, <span style={{ fontWeight: 600, color: 'var(--idfc-red)' }}>orchestrated</span> overnight.
+            Your day, <span style={{ fontWeight: 600, color: 'var(--idfc-red)' }}>orchestrated</span> through IDFC First AI.
           </h2>
           <p className="body-lg" style={{ color: 'var(--text-secondary)', maxWidth: 480, marginTop: 16 }}>
             Routine work handled while you sleep. Priorities ranked and reasoned. Your judgement, where it matters most.
