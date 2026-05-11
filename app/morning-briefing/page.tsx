@@ -34,7 +34,7 @@ function MorningBriefingContent() {
       <div className="anim-fade-up" style={{ marginBottom: 32 }}>
         <div className="h2" style={{ color: 'var(--text-primary)' }}>Good morning, Priya.</div>
         <div className="body-lg" style={{ color: 'var(--text-secondary)', maxWidth: 720, marginTop: 8 }}>
-          Here's your brief for today — priorities, signals, and actions that need your attention.
+          Here's your brief for today — priorities, signals, and actions that need your attention. Actions already completed by AI and the ones that need your review are listed below.
         </div>
       </div>
 
