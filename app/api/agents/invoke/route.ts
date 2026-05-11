@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { SignatureV4 } from '@smithy/signature-v4'
 import { HttpRequest } from '@smithy/protocol-http'
 import { Sha256 } from '@aws-crypto/sha256-js'
-import { defaultProvider } from '@aws-sdk/credential-provider-node'
 
 const AGENT_ARNS: Record<string, string> = {
   pitch_builder:     'arn:aws:bedrock-agentcore:us-east-1:646731024209:runtime/pitch_builder-5izhaw4oB7',
@@ -19,8 +18,15 @@ export async function POST(req: NextRequest) {
     const arn = AGENT_ARNS[agent]
     if (!arn) return NextResponse.json({ error: `Unknown agent: ${agent}` }, { status: 400 })
 
-    const credProvider = defaultProvider()
-    const credentials = await credProvider()
+    const accessKeyId = process.env.BEDROCK_ACCESS_KEY_ID
+    const secretAccessKey = process.env.BEDROCK_SECRET_ACCESS_KEY
+    const sessionToken = process.env.BEDROCK_SESSION_TOKEN
+
+    if (!accessKeyId || !secretAccessKey) {
+      return NextResponse.json({ error: 'AWS credentials not configured. Contact administrator.' }, { status: 500 })
+    }
+
+    const credentials = { accessKeyId, secretAccessKey, ...(sessionToken ? { sessionToken } : {}) }
 
     const sessionId = `rm-${Date.now()}-${Math.random().toString(36).slice(2)}-${agent}`.slice(0, 100)
     const encodedArn = encodeURIComponent(arn)
