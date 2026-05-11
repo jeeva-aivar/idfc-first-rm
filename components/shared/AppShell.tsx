@@ -404,9 +404,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <rect x="22" y="64" width="18" height="14" fill="white"/>
           </svg>
           {!collapsed && (
-            <div style={{ lineHeight: 1 }}>
-              <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: '#EDE8E1' }}>IDFC</span>
-              <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--idfc-red-bright)', marginLeft: 4 }}>FIRST</span>
+            <div style={{ lineHeight: 1.15 }}>
+              <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', color: '#EDE8E1' }}>IDFC <span style={{ color: 'var(--idfc-red-bright)' }}>FIRST</span></div>
+              <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', color: 'rgba(200,194,187,0.6)' }}>Bank</div>
             </div>
           )}
         </div>
