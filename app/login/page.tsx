@@ -253,7 +253,7 @@ export default function LoginPage() {
             Your day, <span style={{ fontWeight: 600, color: 'var(--idfc-red)' }}>orchestrated</span> through IDFC First AI.
           </h2>
           <p className="body-lg" style={{ color: 'var(--text-secondary)', maxWidth: 480, marginTop: 16 }}>
-            Routine work handled while you sleep. Priorities ranked and reasoned. Your judgement, where it matters most.
+            Routine tasks automated for you. Priorities ranked and reasoned. Your judgement, where it matters most.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginTop: 40 }}>

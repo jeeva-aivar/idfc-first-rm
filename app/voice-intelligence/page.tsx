@@ -247,10 +247,31 @@ function TranscriptPanel({ turns, partials, suggestionsByTurn, call }: { turns: 
       {/* Transcript scroll */}
       <div ref={scrollRef} style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '0 20px' }}>
         {call.status === 'waiting' && turns.length === 0 && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 12, color: 'var(--text-tertiary)', padding: '80px 0' }}>
-            <div style={{ fontFamily: "'Source Serif 4',Georgia,serif", fontSize: 40, color: 'var(--border-subtle)', lineHeight: 1 }}>◎</div>
-            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Awaiting call</div>
-            <div style={{ fontSize: 13, textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}>Live transcripts and AI suggestions will appear here once a customer call connects.</div>
+          <div style={{ display: 'flex', flexDirection: 'column', padding: '28px 0' }}>
+            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 14 }}>TODAY&apos;S CALLS · LIVE ASSIST READY</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {[
+                { time: '09:30', customer: 'Mehta Group', type: 'Sanction call', next: true },
+                { time: '11:00', customer: 'NPA Committee', type: 'Quarterly review', next: false },
+                { time: '14:00', customer: 'Iyer Family', type: 'Wealth pitch', next: false },
+              ].map((c, i) => (
+                <div key={c.time} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '11px 0', borderBottom: '1px solid var(--border-subtle)' }}>
+                  {c.next
+                    ? <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#16a34a', flexShrink: 0, boxShadow: '0 0 0 2px rgba(22,163,74,0.2)' }} />
+                    : <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border-subtle)', flexShrink: 0 }} />
+                  }
+                  <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11.5, color: 'var(--text-secondary)', width: 42, flexShrink: 0 }}>{c.time}</span>
+                  <span style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--text-primary)', flex: 1 }}>{c.customer}</span>
+                  <span style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>{c.type}</span>
+                  {c.next && <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#16a34a', border: '1px solid rgba(22,163,74,0.3)', background: 'rgba(22,163,74,0.06)', padding: '2px 7px', borderRadius: 4 }}>Next up</span>}
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, color: 'var(--text-tertiary)', paddingTop: 32, paddingBottom: 16 }}>
+              <div style={{ fontFamily: "'Source Serif 4',Georgia,serif", fontSize: 40, color: 'var(--border-subtle)', lineHeight: 1 }}>◎</div>
+              <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Awaiting call</div>
+              <div style={{ fontSize: 13, textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}>Live transcripts and AI suggestions will appear here once a customer call connects.</div>
+            </div>
           </div>
         )}
 

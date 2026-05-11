@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import { AppShell } from '@/components/shared/AppShell'
 import { Icon } from '@/components/ui/Icon'
 import { StatusDot } from '@/components/ui/StatusDot'
@@ -15,8 +16,16 @@ function StatTile({ label, value, sub, accent }: { label: string; value: string;
   )
 }
 
+const SIGNALS = [
+  { text: "Iyer Family · RD ₹38L maturing 14 May", sub: "High signal moment — pitch window open", href: '/ai-agents/pitch-builder', color: '#d97706' },
+  { text: "Mehta Group · Sanction call at 09:30", sub: "Prep brief ready — review before call", href: '/ai-agents/meeting-preparer', color: '#2563eb' },
+  { text: "Kapoor Group · KYC overdue — SLA risk", sub: "EDD doc needed — breach in 48 hrs", href: '/ai-agents/memo-maker', color: '#dc2626' },
+  { text: "Verma Capital · Q4 portfolio review pending", sub: "Model update needed — quarter close", href: '/ai-agents/model-builder', color: '#7c3aed' },
+]
+
 function MorningBriefingContent() {
   const app = useApp()
+  const router = useRouter()
   const M = MOCK
 
   return (
@@ -25,13 +34,36 @@ function MorningBriefingContent() {
       <div className="anim-fade-up" style={{ marginBottom: 32 }}>
         <div className="h2" style={{ color: 'var(--text-primary)' }}>Good morning, Priya.</div>
         <div className="body-lg" style={{ color: 'var(--text-secondary)', maxWidth: 720, marginTop: 8 }}>
-          While you slept, IDFC FIRST AI handled the routine. Here's what needs your judgement today.
+          Here's your brief for today — priorities, signals, and actions that need your attention.
         </div>
       </div>
 
       {/* Stats */}
       <div className="anim-fade-up" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 40, animationDelay: '60ms' }}>
         {M.briefingStats.map(s => <StatTile key={s.label} {...s} />)}
+      </div>
+
+      {/* Signals */}
+      <div className="anim-fade-up" style={{ marginBottom: 32, animationDelay: '100ms' }}>
+        <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 10 }}>SIGNALS · AI RECOMMENDS</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10 }}>
+          {SIGNALS.map(sig => (
+            <div
+              key={sig.href}
+              style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderLeft: `3px solid ${sig.color}`, borderRadius: 8, padding: '10px 14px', minHeight: 56 }}
+            >
+              <Icon name="Bot" size={14} style={{ color: sig.color, flexShrink: 0 }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sig.text}</div>
+                <div style={{ fontSize: 11, color: 'var(--text-tertiary)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sig.sub}</div>
+              </div>
+              <button
+                onClick={() => router.push(sig.href)}
+                style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '4px 8px', borderRadius: 5, border: `1px solid ${sig.color}`, background: 'transparent', color: sig.color, cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}
+              >Use Agent →</button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Body grid */}
