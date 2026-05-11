@@ -15,11 +15,12 @@ const NAV_SECTIONS = [
   {
     section: 'TODAY',
     items: [
-      { id: 'briefing',    label: 'Morning Briefing', icon: 'Sun',        path: '/morning-briefing' },
-      { id: 'priority',    label: 'Priority Stack',   icon: 'ListChecks', path: '/priority-stack' },
-      { id: 'actions',     label: 'Auto-actions',     icon: 'Sparkles',   path: '/auto-actions' },
-      { id: 'debrief',     label: 'Daily Debrief',    icon: 'Moon',       path: '/daily-debrief' },
-      { id: 'voice',       label: 'Voice Intelligence', icon: 'Mic',       path: '/voice-intelligence' },
+      { id: 'briefing',    label: 'Morning Briefing',   icon: 'Sun',        path: '/morning-briefing' },
+      { id: 'priority',    label: 'Priority Stack',     icon: 'ListChecks', path: '/priority-stack' },
+      { id: 'actions',     label: 'Auto-actions',       icon: 'Sparkles',   path: '/auto-actions' },
+      { id: 'debrief',     label: 'Daily Debrief',      icon: 'Moon',       path: '/daily-debrief' },
+      { id: 'voice',       label: 'Voice Intelligence', icon: 'Mic',        path: '/voice-intelligence' },
+      { id: 'ai-agents',   label: 'AI Agents',          icon: 'Bot',        path: '/ai-agents' },
     ],
   },
   {
