@@ -183,7 +183,7 @@ function DailyDebriefContent() {
   const [planLocked, setPlanLocked] = useState(false)
   const [debriefSent, setDebriefSent] = useState(false)
 
-  const debriefHeadline = 'You did the job you were *hired* to do.'
+  const debriefHeadline = 'A strong day, *Priya*. Here\'s how it went.'
   const parts = debriefHeadline.split(/(\*[^*]+\*)/g).filter(Boolean)
 
   return (

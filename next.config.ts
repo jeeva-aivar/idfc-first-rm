@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
         source: '/api/agent/:path*',
         destination: `${agentUrl}/:path*`,
       },
+      {
+        source: '/api/avatar/:path*',
+        destination: `https://avatar.aivar.app/api/:path*`,
+      },
     ]
   },
 };

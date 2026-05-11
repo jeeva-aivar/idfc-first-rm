@@ -40,7 +40,7 @@ export const MOCK = {
         { k: "Tenor",                v: "84 months" },
         { k: "Locked rate",          v: "10.25% (held until 11 May)" },
         { k: "Sentiment",            v: "Cooling — 12% (last 14 days)" },
-        { k: "Last touch",           v: "Aug 14 — prepayment waiver query" },
+        { k: "Last touch",           v: "14 Apr — prepayment waiver query" },
       ],
     },
     {
@@ -97,7 +97,7 @@ export const MOCK = {
         { k: "Maturing RD",          v: "₹38L on 14 May" },
         { k: "Suggested product",    v: "FIRST Wealth Conservative · 6.8% blended" },
         { k: "Tone signal",          v: "Family-led decisions, formal Hindi" },
-        { k: "Last conversation",    v: "Apr 22 — son's college planning" },
+        { k: "Last conversation",    v: "28 Apr — son's college planning" },
       ],
     },
   ],
@@ -109,7 +109,7 @@ export const MOCK = {
         to: "ravi.patel@patelindustries.in",
         cc: "risk-team@idfcfirstbank.com",
         subject: "Re: Renewal package · CC-22841 · received",
-        body: "Dear Mr. Patel,\n\nThanking you for sharing the renewal documentation for facility CC-22841. I confirm receipt of all 14 attachments. Risk team has been copied for parallel review.\n\nWe will revert with the consolidated quote by Wed 8 May, 17:00 IST.\n\nWarm regards,\nPriya Sharma\nIDFC FIRST Bank · Mumbai N",
+        body: "Dear Mr. Patel,\n\nThanking you for sharing the renewal documentation for facility CC-22841. I confirm receipt of all 14 attachments. Risk team has been copied for parallel review.\n\nWe will revert with the consolidated quote by Fri 9 May, 17:00 IST.\n\nWarm regards,\nPriya Sharma\nIDFC FIRST Bank · Mumbai N",
         meta: [{ k: "Template", v: "Renewal acknowledgement v3.1" }, { k: "Risk score", v: "Low (0.18)" }, { k: "Tier", v: "1 — fully autonomous" }],
       }
     },
@@ -173,8 +173,8 @@ export const MOCK = {
 
   systemUpdates: [
     { time: "04:48", title: "Salesforce notes synced.", detail: "Yesterday's Mehta call notes formatted, tagged & saved.", status: "DONE", tone: "success",
-      detailFull: { kind: "CRM update · Salesforce", to: "Mehta Group account", cc: "—", subject: "Call notes · 7 May 16:30 — sentiment cooling",
-        body: "Auto-formatted notes from voice memo (4 min 22 sec).\n\nKey points:\n  • Customer raised prepayment waiver question (Aug 14 follow-up)\n  • Sentiment cooling — concerns on rate movement\n  • Mentioned competitor (HDFC) approach\n  • Action: send revised term sheet by Wed",
+      detailFull: { kind: "CRM update · Salesforce", to: "Mehta Group account", cc: "—", subject: "Call notes · 8 May 16:30 — sentiment cooling",
+        body: "Auto-formatted notes from voice memo (4 min 22 sec).\n\nKey points:\n  • Customer raised prepayment waiver question (14 Apr follow-up)\n  • Sentiment cooling — concerns on rate movement\n  • Mentioned competitor (HDFC) approach\n  • Action: send revised term sheet by Fri",
         meta: [{ k: "Source", v: "Voice memo · transcribed" }, { k: "Tags applied", v: "sanction, prepayment, competitor-mentioned" }, { k: "Linked to", v: "Opp #OPP-9912" }] }
     },
     { time: "05:14", title: "Pipeline updated · Sharma Industries.", detail: "Stage moved to \"verbal commit\". Confidence 82%.", status: "DONE", tone: "success",
@@ -193,19 +193,19 @@ export const MOCK = {
         meta: [{ k: "Trigger", v: "RD maturity in 5 days" }, { k: "Recommended product", v: "FIRST Wealth Conservative" }, { k: "Pitch ready", v: "Yes — 4 paragraphs, tone-tuned" }, { k: "Expected uplift", v: "₹38L → wealth book + 0.6% margin" }] }
     },
     { time: "06:48", title: "T&E ready · Pune trip.", detail: "OCR extracted 12 receipts. Submission pre-filled.", status: "READY", tone: "info",
-      detailFull: { kind: "Expense submission · ready", to: "Concur · T&E", cc: "—", subject: "Pune trip · 5–6 May · ₹14,820",
+      detailFull: { kind: "Expense submission · ready", to: "Concur · T&E", cc: "—", subject: "Pune trip · 7–8 May · ₹14,820",
         body: "OCR processed 12 receipts (cab, hotel, meals). All matched to calendar entries. Ready for one-click submit.",
         meta: [{ k: "Total", v: "₹14,820" }, { k: "Receipts processed", v: "12 of 12" }, { k: "Policy violations", v: "0" }] }
     },
     { time: "03:58", title: "Mehta Group prep pack assembled.", detail: "Customer 360, competitor rate sheet, prepayment waiver clause.", status: "DONE", tone: "success",
       detailFull: { kind: "Prep pack · automated assembly", to: "Mehta Group · Opp #OPP-9912", cc: "—", subject: "Prep pack ready: 09:30 call",
-        body: "Auto-assembled prep pack:\n\n1. Customer 360: ₹2.4 Cr outstanding, 84m tenor, 10.25% locked rate (held until 11 May)\n2. Last 3 touches: 7 May call (sentiment cooling), 4 May email (rate query), Aug 14 prepayment waiver request\n3. Competitor intelligence: HDFC offering 10.07% — 18 bps lower. Counter-lever: prepayment waiver + relationship discount\n4. Talk-track: open with rate lock confirmation, pivot to waiver before customer raises it\n5. NBA: once facility signed, cross-sell trade finance (₹80L limit, usage-linked)",
+        body: "Auto-assembled prep pack:\n\n1. Customer 360: ₹2.4 Cr outstanding, 84m tenor, 10.25% locked rate (held until 11 May)\n2. Last 3 touches: 8 May call (sentiment cooling), 4 May email (rate query), 14 Apr prepayment waiver request\n3. Competitor intelligence: HDFC offering 10.07% — 18 bps lower. Counter-lever: prepayment waiver + relationship discount\n4. Talk-track: open with rate lock confirmation, pivot to waiver before customer raises it\n5. NBA: once facility signed, cross-sell trade finance (₹80L limit, usage-linked)",
         meta: [{ k: "Sentiment", v: "-12% (cooling)" }, { k: "Competitor", v: "HDFC · 10.07%" }, { k: "Talk-track confidence", v: "0.88" }] }
     },
     { time: "07:00", title: "Weekly MIS report compiled.", detail: "Portfolio AUM ₹84 Cr · 47 customers · 3 NPAs flagged.", status: "READY", tone: "info",
-      detailFull: { kind: "MIS · weekly report", to: "vikram.joshi@idfcfirstbank.com", cc: "—", subject: "Weekly MIS · Mumbai N · Priya Sharma · 5-8 May",
+      detailFull: { kind: "MIS · weekly report", to: "vikram.joshi@idfcfirstbank.com", cc: "—", subject: "Weekly MIS · Mumbai N · Priya Sharma · 6-9 May",
         body: "Weekly performance summary:\n\n• Portfolio: ₹84 Cr AUM, 47 customers\n• Week wins: Sharma Industries ₹12 Cr, Mehta sanction progressed\n• Pipeline: ₹8.4 Cr in negotiation, ₹3.2 Cr in verbal commit\n• SLA: 0 breaches (Kapoor reassigned proactively)\n• Points: 2418 (Rank #3 Mumbai N)\n\nReady to send on your approval.",
-        meta: [{ k: "Coverage", v: "5-8 May 2026" }, { k: "Awaiting approval", v: "Yes — 1-tap send" }] }
+        meta: [{ k: "Coverage", v: "6-9 May 2026" }, { k: "Awaiting approval", v: "Yes — 1-tap send" }] }
     },
   ],
 
@@ -227,11 +227,11 @@ export const MOCK = {
   ],
 
   debriefTimeline: [
-    { time: "09:30", headline: "Mehta call · sentiment swung warm", detail: "+18 points; sanction sign-off cleared at 15:48.",       outcome: "WIN",        tone: "success" },
-    { time: "10:00", headline: "Sharma Industries · ₹12 Cr closed", detail: "Chairman video congratulation delivered in 27 min.",    outcome: "WIN",        tone: "success" },
-    { time: "11:00", headline: "3 meetings, 1 you",                 detail: "Avatars debriefed. Zero context lost.",                 outcome: "MULTIPLIED", tone: "gold" },
-    { time: "12:30", headline: "Kapoor KYC · breach prevented",      detail: "Reassigned to Amit 48 hrs ahead of risk window.",       outcome: "SAVED",      tone: "info" },
-    { time: "16:00", headline: "Iyer family · wealth pitch landed",  detail: "Cross-sell signal converted, follow-up next Wed.",      outcome: "SURFACED",   tone: "redbright" },
+    { time: "09:30", headline: "Mehta call · sentiment swung warm", detail: "+18 points; sanction sign-off cleared at 15:48.",       outcome: "WIN",        tone: "success",  date: "9 May" },
+    { time: "10:00", headline: "Sharma Industries · ₹12 Cr closed", detail: "Chairman video congratulation delivered in 27 min.",    outcome: "WIN",        tone: "success",  date: "8 May" },
+    { time: "11:00", headline: "3 meetings, 1 you",                 detail: "Avatars debriefed. Zero context lost.",                 outcome: "MULTIPLIED", tone: "gold",     date: "8 May" },
+    { time: "12:30", headline: "Kapoor KYC · breach prevented",      detail: "Reassigned to Amit 48 hrs ahead of risk window.",       outcome: "SAVED",      tone: "info",     date: "7 May" },
+    { time: "16:00", headline: "Iyer family · wealth pitch landed",  detail: "Cross-sell signal converted, follow-up next Wed.",      outcome: "SURFACED",   tone: "redbright", date: "28 Apr" },
   ],
 
   leaderboard: {

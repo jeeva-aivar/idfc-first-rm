@@ -1,9 +1,19 @@
 'use client'
 import { useState, useEffect, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import { AppShell } from '@/components/shared/AppShell'
 import { Icon } from '@/components/ui/Icon'
 import { StatusDot } from '@/components/ui/StatusDot'
 import { useApp } from '@/lib/app-context'
+
+function agentForTask(task: { channel: string; title: string; tag: string }): { label: string; path: string } | null {
+  const t = (task.title + ' ' + task.tag).toLowerCase()
+  if (task.channel === 'In-person' || t.includes('meeting') || t.includes('review') || t.includes('debrief') || t.includes('huddle')) return { label: 'Meeting Preparer', path: '/ai-agents/meeting-preparer' }
+  if (t.includes('pitch') || t.includes('cross-sell') || t.includes('nba') || t.includes('wealth')) return { label: 'Pitch Builder', path: '/ai-agents/pitch-builder' }
+  if (t.includes('memo') || t.includes('recap') || t.includes('draft')) return { label: 'Memo Maker', path: '/ai-agents/memo-maker' }
+  if (t.includes('portfolio') || t.includes('model') || t.includes('rebalanc')) return { label: 'Model Builder', path: '/ai-agents/model-builder' }
+  return null
+}
 
 // ─── All 22 tasks from the mockup ────────────────────────────────────────────
 const STACK_TASKS = [
@@ -57,6 +67,7 @@ function SourcePill({ source }: { source: string }) {
 }
 
 function StackBlade({ task, onClose, onComplete }: { task: Task | null; onClose: () => void; onComplete: (id: string) => void }) {
+  const router = useRouter()
   if (!task) return null
   const m = SOURCE_META[task.source] || SOURCE_META.ad
   const anyTask = task as Record<string, string>
@@ -138,10 +149,21 @@ function StackBlade({ task, onClose, onComplete }: { task: Task | null; onClose:
           </div>
         </div>
 
-        <div style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 8, borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-card)' }}>
-          <button className="btn-primary" onClick={() => onComplete(task.id)}>{task.status === 'DONE' ? 'Re-open' : 'Mark complete'}</button>
-          <button className="btn-secondary">Open prep pack</button>
-          <button className="btn-ghost" style={{ marginLeft: 'auto' }}>Reschedule</button>
+        <div style={{ padding: '16px 24px', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-card)' }}>
+          {agentForTask(task) && (
+            <button
+              onClick={() => router.push(agentForTask(task)!.path)}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, width: '100%', marginBottom: 10, height: 34, padding: '0 14px', borderRadius: 8, border: '1px solid rgba(139,26,26,0.3)', background: 'rgba(139,26,26,0.06)', color: 'var(--idfc-red)', fontSize: 12.5, fontWeight: 500, cursor: 'pointer' }}
+            >
+              <Icon name="Bot" size={13} />
+              Use {agentForTask(task)!.label} for this task
+            </button>
+          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <button className="btn-primary" onClick={() => onComplete(task.id)}>{task.status === 'DONE' ? 'Re-open' : 'Mark complete'}</button>
+            <button className="btn-secondary">Open prep pack</button>
+            <button className="btn-ghost" style={{ marginLeft: 'auto' }}>Reschedule</button>
+          </div>
         </div>
       </aside>
     </>
