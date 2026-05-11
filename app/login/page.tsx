@@ -4,15 +4,20 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@/components/ui/Icon'
 
-function LogoMark({ size = 32 }: { size?: number }) {
+function LogoMark({ size = 36 }: { size?: number }) {
+  // On dark-red login background: transparent areas let red show through, white = visible bars
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" fill="none" style={{ flexShrink: 0 }}>
-      <rect width="100" height="100" fill="rgba(255,255,255,0.18)"/>
-      <rect x="6" y="6" width="88" height="88" fill="white"/>
-      <rect x="14" y="14" width="72" height="72" fill="rgba(255,255,255,0.18)"/>
-      <rect x="22" y="22" width="56" height="16" fill="white"/>
-      <rect x="22" y="44" width="38" height="14" fill="white"/>
-      <rect x="22" y="64" width="18" height="14" fill="white"/>
+      {/* Outer white border frame */}
+      <rect width="100" height="100" fill="white"/>
+      {/* Inner area — transparent so login background (dark red) shows through */}
+      <rect x="8" y="8" width="84" height="84" fill="transparent"/>
+      {/* Re-draw with correct layering: white frame, then cutout */}
+      <rect x="8" y="8" width="84" height="84" fill="rgba(180,30,30,0.85)"/>
+      {/* F-mark bars in white */}
+      <rect x="20" y="20" width="60" height="16" fill="white"/>
+      <rect x="20" y="44" width="40" height="14" fill="white"/>
+      <rect x="20" y="66" width="20" height="14" fill="white"/>
     </svg>
   )
 }
@@ -114,7 +119,7 @@ export default function LoginPage() {
             <LogoMark size={32} />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2, lineHeight: 1 }}>
               <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.04em' }}>IDFC FIRST</span>
-              <span style={{ fontSize: 9.5, fontWeight: 500, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.7)' }}>AI WORKSPACE</span>
+              <span style={{ fontSize: 9.5, fontWeight: 500, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.7)' }}>EMPLOYEE AI WORKSPACE</span>
             </div>
           </div>
 

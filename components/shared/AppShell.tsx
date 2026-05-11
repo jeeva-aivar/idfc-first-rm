@@ -381,13 +381,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         style={{
           position: 'fixed', top: 0, left: 0, height: '100vh',
           width: sidebarW, flexShrink: 0,
-          background: 'var(--sb-bg)', borderRight: '1px solid var(--sb-border)',
+          background: '#0E0E0E', borderRight: '1px solid rgba(255,255,255,0.07)',
           display: 'flex', flexDirection: 'column',
           transition: 'width 200ms ease', zIndex: 30,
         }}
       >
         {/* Logo */}
-        <div style={{ height: 'var(--topbar-h)', padding: collapsed ? 0 : '0 16px', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', borderBottom: '1px solid var(--sb-border)', gap: 10 }}>
+        <div style={{ height: 'var(--topbar-h)', padding: collapsed ? 0 : '0 16px', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', borderBottom: '1px solid rgba(255,255,255,0.07)', gap: 10 }}>
           {/* IDFC FIRST logo mark */}
           <svg width={34} height={34} viewBox="0 0 100 100" fill="none" style={{ flexShrink: 0 }}>
             {/* Outer square background */}
@@ -405,7 +405,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </svg>
           {!collapsed && (
             <div style={{ lineHeight: 1 }}>
-              <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--sb-text-strong)' }}>IDFC</span>
+              <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: '#EDE8E1' }}>IDFC</span>
               <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--idfc-red-bright)', marginLeft: 4 }}>FIRST</span>
             </div>
           )}
@@ -415,8 +415,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <nav style={{ flex: 1, overflowY: 'auto', padding: '16px 12px 24px' }}>
           {NAV_SECTIONS.map((sec) => (
             <div key={sec.section} style={{ marginBottom: 20 }}>
-              {!collapsed && <div style={{ padding: '0 12px', marginBottom: 8, fontFamily: "'JetBrains Mono','SF Mono',ui-monospace,monospace", fontSize: 10, fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--sb-text-muted)' }}>{sec.section}</div>}
-              {collapsed && <div style={{ height: 1, background: 'var(--sb-border)', margin: '0 8px 10px' }} />}
+              {!collapsed && <div style={{ padding: '0 12px', marginBottom: 8, fontFamily: "'JetBrains Mono','SF Mono',ui-monospace,monospace", fontSize: 10, fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(200,194,187,0.45)' }}>{sec.section}</div>}
+              {collapsed && <div style={{ height: 1, background: 'rgba(255,255,255,0.07)', margin: '0 8px 10px' }} />}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {sec.items.map((it) => {
                   const isActive = activeId === it.id
@@ -431,9 +431,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                         borderRadius: 8,
                         cursor: 'pointer',
                         fontSize: 13.5,
-                        color: isActive ? 'var(--sb-text-strong)' : 'var(--sb-text)',
-                        background: isActive ? 'var(--sb-active-bg)' : 'transparent',
-                        borderLeft: isActive ? '2px solid var(--sb-active-border)' : '2px solid transparent',
+                        color: isActive ? '#EDE8E1' : '#C8C2BB',
+                        background: isActive ? 'rgba(220,38,38,0.12)' : 'transparent',
+                        borderLeft: isActive ? '2px solid #DC2626' : '2px solid transparent',
                         fontWeight: isActive ? 500 : 400,
                         transition: 'background 100ms ease',
                       }}
@@ -459,8 +459,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             height: 32, width: collapsed ? 32 : 'auto',
             padding: collapsed ? 0 : '0 10px',
             display: 'inline-flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start',
-            gap: 8, borderRadius: 8, border: '1px solid var(--sb-border)', background: 'rgba(255,255,255,0.04)',
-            fontSize: 12, color: 'var(--sb-text)', cursor: 'pointer',
+            gap: 8, borderRadius: 8, border: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.04)',
+            fontSize: 12, color: '#C8C2BB', cursor: 'pointer',
           }}
         >
           <Icon name={collapsed ? 'ChevronsRight' : 'ChevronsLeft'} size={14} />
@@ -468,12 +468,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </button>
 
         {/* User */}
-        <div style={{ padding: collapsed ? '12px 0' : '12px 16px', borderTop: '1px solid var(--sb-border)', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 10 }}>
+        <div style={{ padding: collapsed ? '12px 0' : '12px 16px', borderTop: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 10 }}>
           <div className="avatar" style={{ width: 30, height: 30, fontSize: 11 }}>{MOCK.rm.initials}</div>
           {!collapsed && (
             <div style={{ lineHeight: 1.4 }}>
-              <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--sb-text-strong)' }}>{MOCK.rm.name}</div>
-              <div style={{ fontSize: 11, color: 'var(--sb-text-muted)' }}>{MOCK.rm.role}</div>
+              <div style={{ fontSize: 13, fontWeight: 500, color: '#EDE8E1' }}>{MOCK.rm.name}</div>
+              <div style={{ fontSize: 11, color: 'rgba(200,194,187,0.45)' }}>{MOCK.rm.role}</div>
             </div>
           )}
         </div>
