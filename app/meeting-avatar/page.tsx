@@ -94,7 +94,7 @@ export default function MeetingAvatarPage() {
             <input
               value={adhocLink}
               onChange={e => { setAdhocLink(e.target.value); setAdhocStatus('idle') }}
-              placeholder="Paste Teams or Google Meet link…"
+              placeholder="Paste Google Meet link…"
               style={{ flex: 1, height: 40, background: 'var(--bg-subtle)', border: '1px solid var(--border-subtle)', borderRadius: 8, padding: '0 14px', fontSize: 13, color: 'var(--text-primary)', outline: 'none', fontFamily: 'inherit' }}
             />
             <button
