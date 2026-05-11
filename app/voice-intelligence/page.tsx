@@ -1,4 +1,5 @@
-'use client'
+
+​'use client'
 import { useCallback, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from 'react'
 import { AppShell } from '@/components/shared/AppShell'
 
@@ -104,7 +105,8 @@ function useAgentSocket(onEvent: (e: ServerEvent) => void) {
       if (wsRef.current && (wsRef.current.readyState === WebSocket.OPEN || wsRef.current.readyState === WebSocket.CONNECTING)) return
       setStatus('connecting')
       const proto = location.protocol === 'https:' ? 'wss:' : 'ws:'
-      const ws = new WebSocket(`${proto}//${location.host}/api/agent/live`)
+      const wsUrl = process.env.NEXT_PUBLIC_AGENT_WS_URL ?? `${proto}//${location.host}/api/agent/live`
+      const ws = new WebSocket(wsUrl)
       wsRef.current = ws
       ws.onopen = () => setStatus('connected')
       ws.onmessage = ({ data }) => { try { onRef.current(JSON.parse(data) as ServerEvent) } catch { /* ignore */ } }
