@@ -6,12 +6,14 @@ import { Icon } from '@/components/ui/Icon'
 
 function LogoMark({ size = 32 }: { size?: number }) {
   return (
-    <span style={{ width: size, height: size, borderRadius: 6, background: 'rgba(255,255,255,0.15)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-      <svg width={Math.round(size * 0.62)} height={Math.round(size * 0.62)} viewBox="0 0 24 24" fill="none">
-        <path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M8 11h8M8 14.5h8M8 18h5" stroke="white" strokeWidth="1.6" strokeLinecap="round" />
-      </svg>
-    </span>
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" style={{ flexShrink: 0 }}>
+      <rect width="100" height="100" fill="rgba(255,255,255,0.18)"/>
+      <rect x="6" y="6" width="88" height="88" fill="white"/>
+      <rect x="14" y="14" width="72" height="72" fill="rgba(255,255,255,0.18)"/>
+      <rect x="22" y="22" width="56" height="16" fill="white"/>
+      <rect x="22" y="44" width="38" height="14" fill="white"/>
+      <rect x="22" y="64" width="18" height="14" fill="white"/>
+    </svg>
   )
 }
 
@@ -241,7 +243,7 @@ export default function LoginPage() {
         </div>
 
         <div className="anim-fade-up" style={{ animationDelay: '120ms', maxWidth: 540 }}>
-          <div className="caption" style={{ color: 'var(--idfc-red)', fontSize: 11 }}>AI WORKSPACE FOR RELATIONSHIP MANAGERS</div>
+          <div className="caption" style={{ color: 'var(--idfc-red)', fontSize: 11 }}>EMPLOYEE AI WORKSPACE</div>
           <h2 style={{ fontSize: 44, fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1.1, color: 'var(--text-primary)', marginTop: 12 }}>
             Your day, <span style={{ fontWeight: 600, color: 'var(--idfc-red)' }}>orchestrated</span> through IDFC First AI.
           </h2>
