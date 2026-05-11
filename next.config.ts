@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/api/avatar/:path*',
-        destination: `https://avatar.aivar.app/:path*`,
+        destination: `https://avatar.aivar.app/api/:path*`,
       },
     ]
   },
