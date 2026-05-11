@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { SignatureV4 } from '@smithy/signature-v4'
 import { HttpRequest } from '@smithy/protocol-http'
 import { Sha256 } from '@aws-crypto/sha256-js'
+import { defaultProvider } from '@aws-sdk/credential-provider-node'
 
 const AGENT_ARNS: Record<string, string> = {
   pitch_builder:     'arn:aws:bedrock-agentcore:us-east-1:646731024209:runtime/pitch_builder-5izhaw4oB7',
@@ -18,13 +19,8 @@ export async function POST(req: NextRequest) {
     const arn = AGENT_ARNS[agent]
     if (!arn) return NextResponse.json({ error: `Unknown agent: ${agent}` }, { status: 400 })
 
-    const accessKeyId     = process.env.AWS_ACCESS_KEY_ID
-    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
-    const sessionToken    = process.env.AWS_SESSION_TOKEN
-
-    if (!accessKeyId || !secretAccessKey) {
-      return NextResponse.json({ error: 'AWS credentials not configured. Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in environment variables.' }, { status: 500 })
-    }
+    const credProvider = defaultProvider()
+    const credentials = await credProvider()
 
     const sessionId = `rm-${Date.now()}-${Math.random().toString(36).slice(2)}-${agent}`.slice(0, 100)
     const encodedArn = encodeURIComponent(arn)
@@ -48,7 +44,7 @@ export async function POST(req: NextRequest) {
     })
 
     const signer = new SignatureV4({
-      credentials: { accessKeyId, secretAccessKey, ...(sessionToken ? { sessionToken } : {}) },
+      credentials,
       region: 'us-east-1',
       service: 'bedrock-agentcore',
       sha256: Sha256,
