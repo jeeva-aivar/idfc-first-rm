@@ -20,6 +20,7 @@ const NAV_SECTIONS = [
       { id: 'actions',     label: 'Auto-actions',       icon: 'Sparkles',   path: '/auto-actions' },
       { id: 'debrief',     label: 'Daily Debrief',      icon: 'Moon',       path: '/daily-debrief' },
       { id: 'voice',       label: 'Live Call Assist',   icon: 'Mic',        path: '/voice-intelligence' },
+      { id: 'avatar',      label: 'Meeting Avatar',     icon: 'UserCircle', path: '/meeting-avatar' },
       { id: 'ai-agents',   label: 'AI Agents',          icon: 'Bot',        path: '/ai-agents',
         children: [
           { id: 'pitch-builder',     label: 'Pitch Builder',     path: '/ai-agents/pitch-builder' },
