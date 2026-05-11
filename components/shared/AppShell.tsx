@@ -56,19 +56,21 @@ const SEARCH_RESULTS = [
 
 function LogoMark({ size = 28 }: { size?: number }) {
   return (
-    <span style={{ width: size, height: size, borderRadius: 6, background: 'var(--idfc-red)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-      <svg width={Math.round(size * 0.62)} height={Math.round(size * 0.62)} viewBox="0 0 24 24" fill="none">
-        <path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M8 11h8M8 14.5h8M8 18h5" stroke="white" strokeWidth="1.6" strokeLinecap="round" />
-      </svg>
-    </span>
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" style={{ flexShrink: 0 }}>
+      <rect width="100" height="100" fill="#8B1A1A"/>
+      <rect x="6" y="6" width="88" height="88" fill="white"/>
+      <rect x="14" y="14" width="72" height="72" fill="#8B1A1A"/>
+      <rect x="22" y="22" width="56" height="16" fill="white"/>
+      <rect x="22" y="44" width="38" height="14" fill="white"/>
+      <rect x="22" y="64" width="18" height="14" fill="white"/>
+    </svg>
   )
 }
 
 function ProfileBlade({ open, onClose }: { open: boolean; onClose: () => void }) {
   const rm = MOCK.rm
   return (
-    <Blade open={open} onClose={onClose} eyebrow="RELATIONSHIP MANAGER" title={rm.name} width={520}
+    <Blade open={open} onClose={onClose} eyebrow="EMPLOYEE AI WORKSPACE" title={rm.name} width={520}
       footer={<div style={{ display: 'flex', gap: 8 }}><button className="btn-secondary" onClick={onClose}>Close</button></div>}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
         <div className="avatar" style={{ width: 56, height: 56, fontSize: 18 }}>{rm.initials}</div>
@@ -156,9 +158,9 @@ function NotificationSettingsModal({ open, onClose, onSave }: { open: boolean; o
 
 function HelpModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const items = [
-    { ico: 'BookOpen',      t: 'Read the RM playbook',          d: 'How AI Workspace fits your day · 12 min read' },
+    { ico: 'BookOpen',      t: 'Read the employee playbook',    d: 'How Employee AI Workspace fits your day · 12 min read' },
     { ico: 'PlayCircle',    t: 'Watch the 3-min walkthrough',   d: 'Morning briefing → debrief in one video' },
-    { ico: 'MessageCircle', t: 'Chat with the AI Workspace bot', d: 'Avg response 12 sec · 24×7' },
+    { ico: 'MessageCircle', t: 'Chat with the IDFC First AI bot', d: 'Avg response 12 sec · 24×7' },
     { ico: 'Phone',         t: 'Call IT helpdesk',              d: '1800-419-4332 · Mon–Sat 08:00–22:00' },
     { ico: 'Mail',          t: 'Email support',                 d: 'rm.workspace.support@idfcfirstbank.com' },
   ]
@@ -180,7 +182,7 @@ function HelpModal({ open, onClose }: { open: boolean; onClose: () => void }) {
         ))}
       </div>
       <div className="caption" style={{ marginTop: 16, textTransform: 'none', letterSpacing: 0, color: 'var(--text-tertiary)', fontSize: 12 }}>
-        AI Workspace v2.4 · Build 2026.05.08 · Patch notes →
+        Employee AI Workspace v2.4 · Build 2026.05.11 · Patch notes →
       </div>
     </Modal>
   )
@@ -379,27 +381,32 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         style={{
           position: 'fixed', top: 0, left: 0, height: '100vh',
           width: sidebarW, flexShrink: 0,
-          background: 'var(--sb-bg)', borderRight: '1px solid var(--sb-border)',
+          background: '#0E0E0E', borderRight: '1px solid rgba(255,255,255,0.07)',
           display: 'flex', flexDirection: 'column',
           transition: 'width 200ms ease', zIndex: 30,
         }}
       >
         {/* Logo */}
-        <div style={{ height: 'var(--topbar-h)', padding: collapsed ? 0 : '0 16px', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', borderBottom: '1px solid var(--sb-border)', gap: 10 }}>
-          {/* Document icon mark */}
-          <span style={{ width: 32, height: 32, borderRadius: 8, background: '#7B1F1F', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <svg width={18} height={18} viewBox="0 0 24 24" fill="none">
-              <path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" strokeWidth="1.7" strokeLinejoin="round" />
-              <path d="M8 11h8M8 14.5h8M8 18h5" stroke="white" strokeWidth="1.7" strokeLinecap="round" />
-            </svg>
-          </span>
+        <div style={{ height: 'var(--topbar-h)', padding: collapsed ? 0 : '0 16px', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', borderBottom: '1px solid rgba(255,255,255,0.07)', gap: 10 }}>
+          {/* IDFC FIRST logo mark */}
+          <svg width={34} height={34} viewBox="0 0 100 100" fill="none" style={{ flexShrink: 0 }}>
+            {/* Outer square background */}
+            <rect width="100" height="100" fill="#8B1A1A"/>
+            {/* White border frame */}
+            <rect x="6" y="6" width="88" height="88" fill="white"/>
+            {/* Inner red background */}
+            <rect x="14" y="14" width="72" height="72" fill="#8B1A1A"/>
+            {/* Top bar — full width */}
+            <rect x="22" y="22" width="56" height="16" fill="white"/>
+            {/* Middle bar — 3/4 width */}
+            <rect x="22" y="44" width="38" height="14" fill="white"/>
+            {/* Bottom bar — small square */}
+            <rect x="22" y="64" width="18" height="14" fill="white"/>
+          </svg>
           {!collapsed && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 1, lineHeight: 1 }}>
-              <span>
-                <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--sb-text-strong)' }}>IDFC</span>
-                <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--idfc-red-bright)', marginLeft: 4 }}>FIRST</span>
-              </span>
-              <span style={{ color: 'var(--sb-text-muted)', fontSize: 9.5, fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>AI Workspace</span>
+            <div style={{ lineHeight: 1.15 }}>
+              <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', color: '#EDE8E1' }}>IDFC <span style={{ color: 'var(--idfc-red-bright)' }}>FIRST</span></div>
+              <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', color: 'rgba(200,194,187,0.6)' }}>Bank</div>
             </div>
           )}
         </div>
@@ -408,8 +415,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <nav style={{ flex: 1, overflowY: 'auto', padding: '16px 12px 24px' }}>
           {NAV_SECTIONS.map((sec) => (
             <div key={sec.section} style={{ marginBottom: 20 }}>
-              {!collapsed && <div style={{ padding: '0 12px', marginBottom: 8, fontFamily: "'JetBrains Mono','SF Mono',ui-monospace,monospace", fontSize: 10, fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--sb-text-muted)' }}>{sec.section}</div>}
-              {collapsed && <div style={{ height: 1, background: 'var(--sb-border)', margin: '0 8px 10px' }} />}
+              {!collapsed && <div style={{ padding: '0 12px', marginBottom: 8, fontFamily: "'JetBrains Mono','SF Mono',ui-monospace,monospace", fontSize: 10, fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(200,194,187,0.45)' }}>{sec.section}</div>}
+              {collapsed && <div style={{ height: 1, background: 'rgba(255,255,255,0.07)', margin: '0 8px 10px' }} />}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {sec.items.map((it) => {
                   const isActive = activeId === it.id
@@ -424,9 +431,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                         borderRadius: 8,
                         cursor: 'pointer',
                         fontSize: 13.5,
-                        color: isActive ? 'var(--sb-text-strong)' : 'var(--sb-text)',
-                        background: isActive ? 'var(--sb-active-bg)' : 'transparent',
-                        borderLeft: isActive ? '2px solid var(--sb-active-border)' : '2px solid transparent',
+                        color: isActive ? '#EDE8E1' : '#C8C2BB',
+                        background: isActive ? 'rgba(220,38,38,0.12)' : 'transparent',
+                        borderLeft: isActive ? '2px solid #DC2626' : '2px solid transparent',
                         fontWeight: isActive ? 500 : 400,
                         transition: 'background 100ms ease',
                       }}
@@ -452,8 +459,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             height: 32, width: collapsed ? 32 : 'auto',
             padding: collapsed ? 0 : '0 10px',
             display: 'inline-flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start',
-            gap: 8, borderRadius: 8, border: '1px solid var(--sb-border)', background: 'rgba(255,255,255,0.04)',
-            fontSize: 12, color: 'var(--sb-text)', cursor: 'pointer',
+            gap: 8, borderRadius: 8, border: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.04)',
+            fontSize: 12, color: '#C8C2BB', cursor: 'pointer',
           }}
         >
           <Icon name={collapsed ? 'ChevronsRight' : 'ChevronsLeft'} size={14} />
@@ -461,12 +468,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </button>
 
         {/* User */}
-        <div style={{ padding: collapsed ? '12px 0' : '12px 16px', borderTop: '1px solid var(--sb-border)', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 10 }}>
+        <div style={{ padding: collapsed ? '12px 0' : '12px 16px', borderTop: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 10 }}>
           <div className="avatar" style={{ width: 30, height: 30, fontSize: 11 }}>{MOCK.rm.initials}</div>
           {!collapsed && (
             <div style={{ lineHeight: 1.4 }}>
-              <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--sb-text-strong)' }}>{MOCK.rm.name}</div>
-              <div style={{ fontSize: 11, color: 'var(--sb-text-muted)' }}>{MOCK.rm.role}</div>
+              <div style={{ fontSize: 13, fontWeight: 500, color: '#EDE8E1' }}>{MOCK.rm.name}</div>
+              <div style={{ fontSize: 11, color: 'rgba(200,194,187,0.45)' }}>{MOCK.rm.role}</div>
             </div>
           )}
         </div>

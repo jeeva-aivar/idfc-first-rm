@@ -462,8 +462,12 @@ function ActionDetailContent({ id }: { id: string }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 18, padding: '18px 22px', background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: 10, cursor: 'pointer' }} className="row-hover">
                   <div style={{ width: 48, height: 48, borderRadius: 10, background: 'var(--idfc-red-bright)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <svg width={26} height={26} viewBox="0 0 24 24" fill="none">
-                      <path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" strokeWidth="1.6" strokeLinejoin="round" />
-                      <path d="M8 11h8M8 14.5h8M8 18h5" stroke="white" strokeWidth="1.6" strokeLinecap="round" />
+                      <rect width="26" height="26" fill="#8B1A1A"/>
+                      <rect x="1.5" y="1.5" width="23" height="23" fill="white"/>
+                      <rect x="3.5" y="3.5" width="19" height="19" fill="#8B1A1A"/>
+                      <rect x="5.5" y="5.5" width="15" height="4" fill="white"/>
+                      <rect x="5.5" y="11.5" width="10" height="3.5" fill="white"/>
+                      <rect x="5.5" y="17" width="5" height="3.5" fill="white"/>
                     </svg>
                   </div>
                   <div style={{ flex: 1 }}>

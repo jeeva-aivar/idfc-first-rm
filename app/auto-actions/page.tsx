@@ -127,7 +127,7 @@ function AutoActionsContent() {
       {/* Headline */}
       <div style={{ marginBottom: 28 }}>
         <h1 className="font-serif" style={{ fontSize: 46, fontWeight: 400, lineHeight: 1.1, color: 'var(--text-primary)', margin: 0 }}>
-          {totalCount} things <em style={{ fontStyle: 'italic', color: 'var(--idfc-red-bright)' }}>IDFC FIRST AI</em> handled overnight.
+          {totalCount} things <em style={{ fontStyle: 'italic', color: 'var(--idfc-red-bright)' }}>IDFC FIRST AI</em> handled.
         </h1>
         <div style={{ marginTop: 10, fontSize: 15.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
           Allow all, or review individually. Anything you reject becomes a rule going forward.
