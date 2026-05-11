@@ -19,6 +19,7 @@ const NAV_SECTIONS = [
       { id: 'priority',    label: 'Priority Stack',   icon: 'ListChecks', path: '/priority-stack' },
       { id: 'actions',     label: 'Auto-actions',     icon: 'Sparkles',   path: '/auto-actions' },
       { id: 'debrief',     label: 'Daily Debrief',    icon: 'Moon',       path: '/daily-debrief' },
+      { id: 'voice',       label: 'Voice Intelligence', icon: 'Mic',       path: '/voice-intelligence' },
     ],
   },
   {
