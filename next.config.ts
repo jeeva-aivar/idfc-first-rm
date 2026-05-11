@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? 'http://localhost:3000',
   },
   async rewrites() {
-    const beUrl = process.env.CONVOGENT_BE_URL || 'https://demo.convogent.ai'
-    const agentUrl = process.env.CONVOGENT_AGENT_URL || 'https://demo-agent.convogent.ai'
+    const beUrl = process.env.CONVOGENT_BE_URL || 'https://idfc-call-tapping.aivar.app'
+    const agentUrl = process.env.CONVOGENT_AGENT_URL || 'https://idfc-call-tapping.aivar.app'
     return [
       {
         source: '/api/convogent/:path*',
